@@ -1,0 +1,65 @@
+.guestpagebody{
+    width: 100%;
+   min-height: 100vh;
+    background-color: black;
+}
+.guestpageheader{
+    width: 100%;
+    height: 12%;
+    color: aliceblue;
+    text-align: center;
+    padding-top: 10px;
+    background-color:#F33A6A ;
+}
+.guestpageabout{
+    width: 80%;
+    font-size: small;
+    padding: 20px;
+}
+.guestpageheader h1{
+    font-size: x-large;
+    color: black;
+    font-weight: bold;
+    font-style: normal;
+    font-family: 'Times New Roman', Times, serif;
+  
+}
+.guestpagemiddle{
+    width:100%;
+min-height: 400px;
+    color: wheat;
+    background-image: url('../../../public/landigimage.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content:space-around;
+}
+.guestpagemiddle h1{
+    font-size: larger;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.guestpagecard{
+    width: 30%;
+    background-color:#000000d9 ;
+    min-height: 200px;
+    text-align: center;
+    color: #fbecf0;
+    padding: .2cm;
+}
+.guestpagecard2{
+    width: 30%;
+    background-color:#000000d9 ;
+    min-height: 200px;
+    text-align: center;
+    color: #fde3ea;
+    padding: .2cm;
+}
+.guestpagedetails{
+    width:100%;
+    height: 20%;
+    color: white;
+    text-align: center;
+    display: flex;
+}

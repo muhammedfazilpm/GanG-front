@@ -1,0 +1,60 @@
+.headers{
+    background-color: rgb(43, 43, 43);
+    height: 20%;
+    width: 100%;
+    color: wheat;
+    text-align: center;
+    padding-top: 2%;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2%;
+}
+*{
+    align-items: center;
+  justify-content: center;
+    
+
+}
+.card2{
+    background-image: url('../../../public/otp.avif');
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+
+}
+.forms{
+    width: 50%;
+    height: 50%;
+    background-color: rgba(30, 29, 29, 0.862);
+    display: flex;
+    align-items: center;
+    
+}
+.otpform{
+    display: block;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+.otpform h3{
+    color: aliceblue;
+}
+.inputs input{
+    width: 100%;
+    font-size: large;
+}
+.button2{
+    margin-left: 4%  !important;
+    background-color: rgb(3, 98, 17);
+    
+}
+.otpform a{
+    text-decoration: none;
+    color: wheat;
+}

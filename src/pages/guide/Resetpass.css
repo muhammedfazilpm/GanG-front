@@ -1,0 +1,36 @@
+.resetheader{
+    background-color: black;
+    color: bisque;
+    text-align: center;
+    padding: 1%;
+
+}
+.resetcards{
+    width: 100%;
+    background-image: url('../../../public/passwor.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.resetform{
+    width: 50%;
+    height: 50%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.394);
+   
+}
+.resetform p{
+    color: aliceblue;
+    margin-top: 1%;
+}
+.resetform button{
+    background-color: black;
+    color: white;
+}
+.resetform a{
+    color: aliceblue;
+    text-decoration: none;
+}
