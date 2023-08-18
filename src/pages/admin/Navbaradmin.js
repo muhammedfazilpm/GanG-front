@@ -61,6 +61,12 @@ export default function Navbaradmin() {
                   Orders
                 </a>
                 <a
+                  href="/admin/banners"
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Banners
+                </a>
+                <a
                   onClick={handleLogout}
                   href="#"
                   className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -120,6 +126,12 @@ export default function Navbaradmin() {
                 className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Guide
+              </a>
+              <a
+                href="/admin/guide"
+                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Banners
               </a>
               <a
                 onClick={handleLogout}

@@ -6,6 +6,8 @@ import "./App.css";
 import GuideContext from "./pages/context";
 import { useState } from "react";
 import axios from "axios";
+import io from 'socket.io-client';
+
 
 import Guesthome from "./pages/guesthome/Guesthome";
 
@@ -24,6 +26,7 @@ import Resetpass from "./pages/guide/Resetpass";
 import Profile from "./pages/guide/Profile";
 import Adddetails from "./pages/guide/Adddetails";
 import Editprofile from "./pages/guide/Editprofile";
+import Orderguide from "./pages/guide/Orderguide";
 
 //guest pages
 import Registerguest from "./pages/guest/Registerguest";
@@ -55,6 +58,12 @@ import Editlocation from "./pages/admin/Editlocation";
 import Guidelist from "./pages/admin/Guidelist";
 import Viewadminguide from "./pages/admin/Viewadminguide";
 import Guestlist from "./pages/admin/Guestlist";
+import Banners from "./pages/admin/Banners";
+import Guestsbanner from "./pages/admin/Guestsbanner";
+
+import Chating from "./pages/Chating";
+const socket=io.connect("http://localhost:5000")
+console.log(socket)
 
 function App() {
   const [guide, setGuide] = useState([]);
@@ -75,6 +84,13 @@ function App() {
   useEffect(() => {
     getGuide();
   }, []);
+  const [username,setUsername]=useState("")
+  const[room,setRoom]=useState("")
+  const joinroom=()=>{
+     if(username!==""&&room!==""){socket.emit("join-room")
+      socket.emit("join-room",room)
+     }
+  }
 
   return (
     <BrowserRouter>
@@ -132,6 +148,14 @@ function App() {
           element={
             <Protectedroute>
               <Editprofile />
+            </Protectedroute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <Protectedroute>
+              <Orderguide />
             </Protectedroute>
           }
         />
@@ -266,8 +290,40 @@ function App() {
             </Protectedadminroute>
           }
         />
+        <Route
+          path="/admin/banners"
+          element={
+            <GuideContext.Provider value={guidedata}>
+              <Banners />
+            </GuideContext.Provider>
+          }
+        />
+         <Route
+          path="/admin/addguestbanner"
+          element={
+            <GuideContext.Provider value={guidedata}>
+              <Guestsbanner />
+            </GuideContext.Provider>
+          }
+        />
+        <Route
+          path="/admin/chat"
+          element={
+            <GuideContext.Provider value={guidedata}>
+         <Chating socket={socket} username={username} romm={room}/>
+            </GuideContext.Provider>
+          }
+        />
       </Routes>
+      
+      <div>
+      <h3>chat</h3>
+      <input type="text" placeholder="fazil.." onChange={(event)=>{setUsername(event.target.value)}}/>
+      <input type="text" placeholder="room id" onChange={(event)=>{setRoom(event.target.value)}}/>
+      <button onClick={joinroom}>join a room</button>
+    </div>
     </BrowserRouter>
+    
   );
 }
 
