@@ -1,7 +1,15 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom';
+import io from 'socket.io-client';
 
-export default function Chating({socket,username,room}) {
+export default function Chating({username}) {
+  const location=useLocation()
+  console.log("location",location)
+  const room=location.state
+  console.log("room",room)
+  const socket=io.connect("http://localhost:5000")
+
     const[currentmessage,setCurrentmessage]=useState("")
     const [messagelist,setMessagelist]=useState([])
     const sendmessage=async()=>{

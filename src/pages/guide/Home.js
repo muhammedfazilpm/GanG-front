@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import { useEffect,useState } from 'react'
-// import { Button } from 'antd'
 import image from './assets/homeimg.jpg'
 import 'tailwindcss/tailwind.css';
 import Navbar from './Navbar';
@@ -10,6 +9,7 @@ import Navbar from './Navbar';
 
 export default function Home() {
   
+  const[banner,bannerSet]=useState([])
 
  
   
@@ -23,7 +23,9 @@ const getData=async()=>{
 
     })
 
-    console.log(response.data)
+  if(response.data.success){
+    bannerSet(response.data.banner)
+  }
     
   } catch (error) {
     console.log(error)
@@ -33,6 +35,9 @@ const getData=async()=>{
   useEffect(()=>{
     getData()
   },[])
+  useEffect(()=>{
+    console.log("home banner",banner)
+  },[banner])
 
  
 
@@ -47,7 +52,7 @@ const getData=async()=>{
    <div className="mb-8 w-full max-w-lg">
   <div className="relative h-0" style={{ paddingBottom: '56.25%' }}>
     <img
-      src={image}
+      src={banner?.guidebanner}
       alt="Sample Image"
       className="absolute top-0 left-0 w-full h-full object-cover rounded-lg shadow-lg"
     />
@@ -56,9 +61,9 @@ const getData=async()=>{
   
   
   <div className="text-center">
-    <h1 className="text-3xl font-semibold mb-4">Welcome to Our Guest and Guide</h1>
+    <h1 className="text-3xl font-semibold mb-4">{banner?.heading}</h1>
     <p className="text-gray-700 text-lg">
-    Our guest-friendly guide side offers a welcoming experience to users who haven't yet registered. Explore a curated selection of content, gain read-only access to articles and resources, and discover the value our platform provides. If you're ready for more, sign up to unlock premium content, personalized recommendations, and special promotions. Navigate with ease, search for topics of interest, and enjoy a seamless user experience. Your privacy is important to us, and we're here to support you. Start your journey today!
+      {banner?.description}
     </p>
   </div>
 </div>

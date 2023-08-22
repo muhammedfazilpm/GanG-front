@@ -5,11 +5,18 @@ import { guideRequest } from '../../axios'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { format } from 'date-fns'
+import io from 'socket.io-client';
 
 export default function Orderguide() {
     const [orders,setOrders]=useState([])
+
+    const socket=io.connect("http://localhost:5000")
+    // useEffect(()=>{
+    //   navigate('/admin/chat',{orders})
+    // },[socket])
+
     const navigate=useNavigate()
-   const getOrder=async (req,res)=>{
+   const getOrder=async ()=>{
     guideRequest({
         url:"/api/guide/getOrder",
         method:'post'
