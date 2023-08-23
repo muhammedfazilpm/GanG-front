@@ -27,6 +27,7 @@ import Profile from "./pages/guide/Profile";
 import Adddetails from "./pages/guide/Adddetails";
 import Editprofile from "./pages/guide/Editprofile";
 import Orderguide from "./pages/guide/Orderguide";
+import Guidechat from "./pages/guide/Guidechat";
 
 //guest pages
 import Registerguest from "./pages/guest/Registerguest";
@@ -63,7 +64,7 @@ import Guidebanner from "./pages/admin/Guidebanner";
 import Editguidebanner from "./pages/admin/Editguidebanner";
 import Guestbanner from "./pages/admin/Guestbanner";
 
-// import Chating from "./pages/Chating";
+import Chating from "./pages/Chating";
 const socket=io.connect("http://localhost:5000")
 console.log(socket)
 
@@ -152,6 +153,14 @@ function App() {
           element={
             <Protectedroute>
               <Orderguide />
+            </Protectedroute>
+          }
+        />
+        <Route
+          path="/guide/chat"
+          element={
+            <Protectedroute>
+              <Guidechat />
             </Protectedroute>
           }
         />
@@ -317,6 +326,14 @@ function App() {
           element={
             <Protectedadminroute>
               <Guestbanner/>
+            </Protectedadminroute>
+          }
+        />
+        <Route
+          path="/guest/chat"
+          element={
+            <Protectedadminroute>
+              <Chating/>
             </Protectedadminroute>
           }
         />

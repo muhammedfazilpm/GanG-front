@@ -1,14 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import { Button } from "antd";
 import Navbarguest from "./Navbarguest";
 import image1 from "./assets/pexels-william-fortunato-6140458.jpg";
 import image2 from "./assets/homeimage2.jpg";
 import image3 from "./assets/home3.jpg";
 import Footerguest from "./Footerguest";
+import { useState } from "react";
 
 export default function Homeguest() {
+  const[banner,setBanner]=useState('')
   const getData = async () => {
     try {
       const response = await axios.post(
@@ -21,7 +22,7 @@ export default function Homeguest() {
         }
       );
 
-      console.log(response.data);
+      setBanner(response.data.data2)
     } catch (error) {
       console.log(error);
     }
@@ -30,6 +31,9 @@ export default function Homeguest() {
   useEffect(() => {
     getData();
   }, []);
+  useEffect(()=>{
+console.log(banner)
+  },[banner])
 
   return (
     <div>
@@ -37,12 +41,12 @@ export default function Homeguest() {
 
       <div className="bg-gray-100 min-h-screen p-4">
         <h1 className="text-3xl font-semibold text-center mb-6">
-          Welcome to Our GAnG
+          {banner[0]?.heading}
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Card 1 */}
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <img src={image1} alt="Image 1" className="mb-4" />
+            <img width='500'height='300' src={image1} alt="Image 1" className="mb-4" />
             <p className="text-gray-700">
               Welcome to Gang, your trusted companion for connecting with
               passionate and knowledgeable tourist guides who bring destinations
@@ -52,17 +56,16 @@ export default function Homeguest() {
 
           {/* Card 2 */}
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <img src={image2} alt="Image 2" className="mb-4" />
+            <img width='500'height='300' src={banner[0]?.image} alt="Image 2" className="mb-4" />
             <p className="text-gray-700">
               {" "}
-              Discover the heart and soul of every place you visit as our
-              platform helps you find the ideal guide to enhance your journey.
+              {banner[0]?.description.slice(0,90)}
             </p>
           </div>
 
           {/* Card 3 */}
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <img src={image3} alt="Image 3" className="mb-4" />
+            <img width='500'height='300' src={image3} alt="Image 3" className="mb-4" />
             <p className="text-gray-700">
               Whether you're a history enthusiast, an adventure seeker, or
               simply looking for an authentic local perspective,

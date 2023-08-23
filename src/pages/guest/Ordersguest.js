@@ -40,7 +40,7 @@ export default function Ordersguest() {
 
  const startChat=(id)=>{
   socket.emit("join-room",id)
-  Navigate('/admin/chat',{state:id})
+  Navigate('/guest/chat',{state:id})
   
  }
   return (

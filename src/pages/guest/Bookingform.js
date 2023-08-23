@@ -7,6 +7,7 @@ import toast  from 'react-hot-toast'
 const Bookingform = () => {
   const navigate = useNavigate();
   const [location, setLocation] = useState([]);
+  const [dateError, setDateError] = useState('');
   const [formData, setFormData] = useState({
     name: "",
     location: "",
@@ -44,6 +45,16 @@ const Bookingform = () => {
       ...prevData,
       [name]: value,
     }));
+    const selectedDate = new Date(value);
+    const currentDate = new Date();
+
+    if (selectedDate < currentDate) {
+      setDateError('Please select a future date');
+    } else {
+      setDateError('');
+    }
+  
+
   };
 
   const handleSubmit = async (event) => {
@@ -54,13 +65,13 @@ const Bookingform = () => {
 
   return (
     <div
-      style={{ display: "flex", height: "85vh", marginTop: "0" }}
+      style={{ display: "flex", height: "85vh", marginTop: "0",background:'wheat'}}
       className="p-8"
     >
       <div
         style={{
           width: "50%",
-          background: "#9e1b32",
+          background: "gray",
           textAlign: "center",
           paddingLeft: "10%",
           paddingRight: "10%",
@@ -119,6 +130,8 @@ const Bookingform = () => {
               className="w-full p-2 border border-gray-300 rounded"
               required
             />
+           {dateError && <p className="text-white bg-red-500">{dateError}</p>}
+
           </div>
           <div>
             <label className="block mb-1 font-medium" htmlFor="numberOfPersons">

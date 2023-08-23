@@ -1,23 +1,18 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
-import Navbarguest from "./guest/Navbarguest";
-export default function Chating({ username }) {
-  const location = useLocation();
-  console.log("location", location);
-  const room = location.state;
-  console.log("room", room);
+import Navbar from "./Navbar";
+
+export default function Guidechat({ username }) {
   const socket = io.connect("http://localhost:5000");
 
   const [currentmessage, setCurrentmessage] = useState("");
   const [messagelist, setMessagelist] = useState([]);
-  const [recievemessagelist, setrecieveMessagelist] = useState([]);
-
+  const [recievdmessage,setRecievedmessage]=useState([]);
   const sendmessage = async () => {
     if (currentmessage !== 0) {
       const messageData = {
-        room: room,
+        room: "64dd4a9d8cfda8f5ce68a8fd",
         author: username,
         message: currentmessage,
         time:
@@ -28,16 +23,22 @@ export default function Chating({ username }) {
       await socket.emit("send_message", messageData);
       setMessagelist((list) => [...list, messageData]);
     }
-  };
+  }; 
+  useEffect(()=>{
+   const id="64dd4a9d8cfda8f5ce68a8fd"
+ socket.emit("join-room",id)    
+     console.log("socket",socket)
+  },[])
   useEffect(() => {
     socket.on("recive_message", (data) => {
-      setrecieveMessagelist((list) => [...list, data]);
-      console.log("recieved",data);
+      console.log("recieve message",data)
+      setRecievedmessage((list) => [...list, data]);
+     
     });
   });
   return (
     <div>
-      <Navbarguest/>
+        <Navbar/>
       <div className="w-full flex-1 p-2 sm:p-6 justify-between flex flex-col h-screen">
         <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
           <div className="relative flex items-center space-x-4">
@@ -57,7 +58,7 @@ export default function Chating({ username }) {
               <div className="text-2xl mt-1 flex items-center">
                 <span className="text-gray-700 mr-3">Anderson Vanhron</span>
               </div>
-              <span className="text-lg text-gray-600">Guide</span>
+              <span className="text-lg text-gray-600">Guest</span>
             </div>
           </div>
           <div className="flex items-center space-x-2">
@@ -95,16 +96,7 @@ export default function Chating({ username }) {
           <div className="chat-message">
             <div className="flex items-end">
               <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-              {recievemessagelist.map((message)=>{
-             return   <div>
-                
-        <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">
-              {message.message}     
-        </span> 
-   
-                  
-                </div>
-                 })}
+               {}
                 <div>
                   <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
                     Check the line above (it ends with a # so, I'm running it as
@@ -159,7 +151,7 @@ export default function Chating({ username }) {
             />
             <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
               <button onClick={sendmessage}
-              style={{background:'maroon'}}
+              style={{background:'blue'}}
                 type="button"
                 className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none"
               >
@@ -169,34 +161,6 @@ export default function Chating({ username }) {
           </div>
         </div>
       </div>
-
-      {/* <style>
-.scrollbar-w-2::-webkit-scrollbar {
-  width: 0.25rem;
-  height: 0.25rem;
-}
-
-.scrollbar-track-blue-lighter::-webkit-scrollbar-track {
-  --bg-opacity: 1;
-  background-color: #f7fafc;
-  background-color: rgba(247, 250, 252, var(--bg-opacity));
-}
-
-.scrollbar-thumb-blue::-webkit-scrollbar-thumb {
-  --bg-opacity: 1;
-  background-color: #edf2f7;
-  background-color: rgba(237, 242, 247, var(--bg-opacity));
-}
-
-.scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
-  border-radius: 0.25rem;
-}
-</style> */}
-
-      {/* <script>
-	const el = document.getElementById('messages')
-	el.scrollTop = el.scrollHeight
-</script> */}
     </div>
   );
 }
