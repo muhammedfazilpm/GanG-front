@@ -45,15 +45,7 @@ const Bookingform = () => {
       ...prevData,
       [name]: value,
     }));
-    const selectedDate = new Date(value);
-    const currentDate = new Date();
-
-    if (selectedDate < currentDate) {
-      setDateError('Please select a future date');
-    } else {
-      setDateError('');
-    }
-  
+   
 
   };
 
@@ -122,15 +114,17 @@ const Bookingform = () => {
               Date
             </label>
             <input
-              type="date"
-              id="date"
-              name="date"
-              value={formData.date}
-              onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded"
-              required
-            />
-           {dateError && <p className="text-white bg-red-500">{dateError}</p>}
+  type="date"
+  id="date"
+  name="date"
+  value={formData.date}
+  onChange={handleInputChange}
+  min={new Date().toISOString().split('T')[0]}
+  className="w-full p-2 border border-gray-300 rounded"
+  required
+/>
+
+          
 
           </div>
           <div>

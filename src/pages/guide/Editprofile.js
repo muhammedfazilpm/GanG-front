@@ -5,13 +5,22 @@ import axios from "axios";
 import { guideRequest } from "../../axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+// Initialization for ES Users
+import {
+  Input,
+  initTE,
+} from "tw-elements";
+
+initTE({ Input });
 
 
 export default function Editprofile() {
+  const [guide, setGuide] = useState([]);
+  const [details,setDetails]=useState([])
   const [inputValue, setInputValue] = useState("");
   const [inputValue2, setInputValue2] = useState("");
   const [inputValue3,setInputValue3]=useState("")
-  const [guide, setGuide] = useState([]);
+  
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
   const handleInputChange = (e) => {
@@ -52,7 +61,7 @@ export default function Editprofile() {
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error("something went wrong");
+      toast.error("Check the form details");
       console.log(error);
     }
   };
@@ -63,6 +72,7 @@ export default function Editprofile() {
     }).then((response)=>{
           console.log("res",response)
       setGuide(response.data.data);
+      setDetails(response.data.details)
     }).catch((err)=>{
       console.log("err",err)
       localStorage.removeItem('token')
@@ -94,6 +104,7 @@ export default function Editprofile() {
               type="text"
               defaultValue={inputValue ? { inputValue } : guide.name}
               onChange={handleInputChange}
+              
             />
           </div>
           <div class="mb-4">
@@ -109,6 +120,8 @@ export default function Editprofile() {
               type="tel"
               defaultValue={inputValue2 ? { inputValue2 } : guide.phone}
               onChange={handleInputChange2}
+              maxLength="10"
+              data-te-input-showcounter="true"
             />
           </div>
           <div class="mb-4">
@@ -123,7 +136,7 @@ export default function Editprofile() {
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="phoneNumber"
               type="Number"
-              defaultValue={inputValue3 ? { inputValue3 } : 0}
+              defaultValue={inputValue3 ? { inputValue3 } : details.amount}
               onChange={handleInputChange3}
             />
           </div>
