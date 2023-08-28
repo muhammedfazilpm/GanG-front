@@ -19,16 +19,21 @@ export default function Review() {
 
 setReview(e.target.value)
       }
-      const submitReview=async()=>{
-       const response=await axios.post("/api/guest/submitReview",{rating,review,data})
-       console.log("response",response)
+      const submitReview=async(e)=>{
+        e.preventDefault()
+       try {
+        const response=await axios.post("/api/guest/submitReview",{rating,review,data})
        if(response.data.success){
         toast.success(response.data.message)
+        
         navigate("/guest/orders")
         
        }
        else{
         toast.error(response.data.message)
+       }
+       } catch (error) {
+        toast.error("try again")
        }
       }
     
@@ -38,11 +43,6 @@ setReview(e.target.value)
         <div className="min-h-screen flex items-center bg-gray-900 justify-center">
       <div className="max-w-md w-full p-5 bg-white rounded-lg shadow-lg">
         <div className="flex justify-center mb-8">
-          {/* <img
-            src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png"
-            alt="Logo"
-            className="w-30 h-20"
-          /> */}
         </div>
         
         <h1 className="text-2xl font-semibold text-center text-gray-500 mt-8 mb-6">
@@ -79,7 +79,7 @@ setReview(e.target.value)
       </p>
     </div>
             <label
-              htmlFor="nombre"
+              htmlFor="review"
               className="block mb-2 text-sm text-gray-600"
             >
             Write your review here
@@ -106,10 +106,7 @@ setReview(e.target.value)
         </form>
         <div className="text-center">
           <p className="text-sm">
-            {/* ¿Ya tienes una cuenta?{' '}
-            <a href="#" className="text-cyan-600">
-              Inicia sesión
-            </a> */}
+           
           </p>
         </div>
         <p className="text-xs text-gray-600 text-center mt-8">

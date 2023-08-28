@@ -7,9 +7,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "flowbite";
 import toast from "react-hot-toast";
+import Rating from "../guest/Rating";
 
 export default function Viewadminguide() {
   const [details, setDetails] = useState({});
+  const [review,setReview]=useState([])
+  const [avgrating,setRating]=useState(null)
   const navigate = useNavigate();
   const guide = useLocation();
   const guides = guide.state;
@@ -18,6 +21,8 @@ export default function Viewadminguide() {
     try {
       const response = await axios.post("/api/admin/getdetails", { id: id });
       setDetails(response.data.data);
+      setReview(response.data.reviews)
+      setRating(response.data.average)
     } catch (error) {
       console.log(error);
     }
@@ -51,17 +56,24 @@ export default function Viewadminguide() {
     <div>
       <Navbaradmin />
 
-      <div style={{ display: "flex", marginTop: "3%" }}>
+      <div className="mx-auto grid max-w-4xl grid-cols-12 gap-4 bg-zinc-50 p-1">
+  <div className="col-span-12 rounded-lg border border-gray-500 bg-gray-200 p-1 sm:col-span-4">
+  <div style={{ display: "flex", marginTop: "3%",textAlign:'center' }}>
         <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
           {details ? "" : <p style={{ color: "red" }}>No details added</p>}
           <a href="#">
             <img class="rounded-t-lg" src={details?.idimage} alt="image" />
           </a>
           <div class="p-5">
+          <Rating rating={avgrating}/>
+          <p>{avgrating}</p>
+
+
             <a href="#">
               <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {details?.name}
               </h5>
+              
               <h6 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                 ID:{details?.idnumber}
               </h6>
@@ -96,6 +108,37 @@ export default function Viewadminguide() {
           </div>
         </div>
       </div>
-    </div>
+  </div>
+  <div className="col-span-12 rounded-lg border border-gray-400 bg-gray-200 p-1 sm:col-span-7">
+  <h2 className="text-xl font-semibold text-slate-800 mb-4">Reviews</h2>
+  <div className="grid gap-4">
+    {review.map((item) => (
+      <div className="rounded-xl border p-4 shadow-md bg-white">
+        <div className="flex justify-between items-center border-b pb-3">
+          <div className="flex items-center space-x-3">
+            <div className="text-lg font-semibold text-slate-700">{item.guestname}</div>
+          </div>
+          <div className="flex items-center space-x-3">
+            <Rating rating={item.rating} />
+            <div className="text-xs text-neutral-500">{item.rating}</div>
+          </div>
+        </div>
+
+        <div className="mt-3">
+          <p className="text-sm text-neutral-600">{item.review}</p>
+        </div>
+
+        {/* Additional actions/icons can be added here */}
+      </div>
+    ))}
+  </div>
+</div>
+  </div>
+</div>
+
+
+      
+      
+    
   );
 }

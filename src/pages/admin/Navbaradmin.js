@@ -33,7 +33,7 @@ export default function Navbaradmin() {
                   href="/admin"
                   className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  Home
+                  Dashboard
                 </a>
                 <a
                   href="/admin/location"
@@ -113,7 +113,7 @@ export default function Navbaradmin() {
                 href="/admin"
                 className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Home
+                Dashboard
               </a>
               <a
                 href="/admin/location"

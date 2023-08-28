@@ -3,11 +3,14 @@ import Navbar from "./Navbar";
 import { Button } from "antd";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Rating from "../guest/Rating";
 
 
 export default function Profile() {
   const [profile, setData] = useState([]);
   const [Details, setdetails] = useState([]);
+  const [review,setReview]=useState([])
+  const[rating,setRating]=useState(null)
   const getProfile = async () => {
     try {
       const response = await axios.post(
@@ -21,6 +24,8 @@ export default function Profile() {
       );
       setData(response.data.data);
       setdetails(response.data.details);
+      setReview(response.data.reviews)
+      setRating(response.data.average)
     } catch (error) {
       console.log(error);
     }
@@ -33,24 +38,18 @@ export default function Profile() {
   useEffect(() => {
     console.log("datas", profile);
     console.log("details", Details);
-  }, [profile, Details]);
+    console.log("review",review)
+  }, [profile, Details,review]);
   return (
     <div>
       <Navbar />
       <div class="">
+       
+      </div>
+      <div className="mx-auto grid max-w-4xl grid-cols-12 gap-2 bg-zinc-50 p-1">
+      <div className="col-span-12 sm:col-span-8 flex flex-col h-full">
+        <div className="rounded-lg border border-gray-500 bg-gray-200 p-0 flex-grow">
         <div
-          style={{
-            backgroundColor: "white",
-            textAlign: "center",
-            color: "#F33A6A",
-            fontSize: "large",
-            fontWeight:'bolder'
-          }}
-          class="bg-white shadow-md p-4"
-        >
-          <h2>PROFILE</h2>
-
-          <div
             style={{ backgroundColor: "#002242",color:'white' }}
             className="max-w-sm mx-auto bg-white shadow-md rounded-lg overflow-hidden"
           >
@@ -61,10 +60,12 @@ export default function Profile() {
                   src={profile?.profile}
                   // alt="Profile"
                 />
+               
               </div>
               <h2 style={{color:'white'}} className="mt-4 text-gray-800 text-lg font-semibold text-center">
                 {profile.name}
               </h2>
+              <Rating rating={rating}/>
               <p style={{color:'white'}} className="text-gray-600 text-center">{profile.email}</p>
               <p style={{color:'white'}} className="text-gray-600 text-center">{profile.phone}</p>
 
@@ -127,6 +128,29 @@ export default function Profile() {
           </div>
         </div>
       </div>
+      <div style={{width:"100%"}} className="col-span-12 sm:col-span-4 flex  flex-col">
+  <div style={{width:"100%"}} className="rounded-lg border border-gray-400 bg-gray-200 p-0 flex-grow mx-auto text-center overflow-auto">
+    {review.map((item) => (
+      <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden mx-auto text-center">
+        <div className="flex items-center p-2 mx-auto text-center">
+          <div>
+            <p className="font-semibold text-gray-800">{item?.guestname}</p>
+            <p className="text-sm text-gray-600">{item?.rating}</p>
+            <Rating rating={item?.rating}/>
+          </div>
+        </div>
+        <div className="p-4">
+          <p className="text-gray-800">{item?.review}</p>
+          
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+
+
+    </div>
     </div>
   );
 }
