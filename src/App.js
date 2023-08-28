@@ -28,6 +28,7 @@ import Adddetails from "./pages/guide/Adddetails";
 import Editprofile from "./pages/guide/Editprofile";
 import Orderguide from "./pages/guide/Orderguide";
 import Guidechat from "./pages/guide/Guidechat";
+import Completeform from "./pages/guide/Completeform";
 
 //guest pages
 import Registerguest from "./pages/guest/Registerguest";
@@ -44,6 +45,7 @@ import Bookingguest from "./pages/guest/Bookingguest";
 import Listguideinguest from "./pages/guest/Listguideinguest";
 import Guideviewguest from "./pages/guest/Guideviewguest";
 import Ordersguest from "./pages/guest/Ordersguest";
+import Review from "./pages/guest/Review";
 
 // admin pages
 import Loginadmin from "./pages/admin/Loginamin";
@@ -190,7 +192,14 @@ function App() {
               <Homeguest />
             </Protectedguestroute>
           }
-        />
+        /><Route
+        path="/guide/ordercomplete"
+        element={
+          <Protectedguestroute>
+            <Completeform />
+          </Protectedguestroute>
+        }
+      />
         <Route path="/forgetPassword" element={<Forgetguest />} />
         <Route path="/guestreset" element={<Resetguest />} />
         {/* after guest login */}
@@ -216,6 +225,14 @@ function App() {
           element={
             <Protectedguestroute>
               <Ordersguest/>
+            </Protectedguestroute>
+          }
+        />
+         <Route
+          path="/guest/getReview"
+          element={
+            <Protectedguestroute>
+              <Review/>
             </Protectedguestroute>
           }
         />

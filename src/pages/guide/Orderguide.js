@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { format } from 'date-fns'
 import io from 'socket.io-client';
+import axios from 'axios'
 
 export default function Orderguide() {
     const [orders,setOrders]=useState([])
@@ -14,8 +15,25 @@ export default function Orderguide() {
     // useEffect(()=>{
     //   navigate('/admin/chat',{orders})
     // },[socket])
-
     const navigate=useNavigate()
+    const sendCompletecode=async(id)=>{
+        
+       try {
+        const response=await axios.post("api/guide/sendcomplete",{id})
+        if(response.data.success){
+            toast.success(response.data.message)
+            navigate("/guide/ordercomplete",{state:response.data.data})
+        }
+        else{
+            toast.error(response.data.message)
+        }
+        
+       } catch (error) {
+        toast.error("try again")
+        
+       }
+    }
+   
    const getOrder=async ()=>{
     guideRequest({
         url:"/api/guide/getOrder",
@@ -43,9 +61,25 @@ export default function Orderguide() {
     useEffect(()=>{
     getOrder()
     },[])
+
+// Convert to Date object
+const date = new Date();
+
+
+const year = date.getFullYear();
+const month = String(date.getMonth() + 1).padStart(2, '0');
+const day = String(date.getDate()).padStart(2, '0');
+const hours = String(date.getUTCHours()).padStart(2, '0');
+const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+
+
+const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.000Z`;
   return (
-    <div>
+    <div >
       <Navbar/>
+      
+    <div className='w-full text-center 3xl font-bold'>ORDERS</div>
       
       <div class="relative overflow-x-auto p-0.5">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-collapse">
@@ -66,31 +100,49 @@ export default function Orderguide() {
                 <th scope="col" class="px-6 py-3 border-b border-gray-300">
                     Number of guests
                 </th>
+                <th scope="col" class="px-6 py-3 border-b border-gray-300">
+                    Make complete
+                </th>
+
             </tr>
         </thead>
         <tbody>
-            {order?.map((item)=>(
-                  <tr class="bg-gray-100 text-center dark:bg-gray-800">
-                  <td class="px-6 text-center py-4 border-b border-gray-300 px-6 py-4 border-r">
-                      {item?.guest}
-                  </td>
-                  <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
-                      {format(new Date(item?.dateofbook),'dd-MM-yyyy')}
-                  </td>
-                  <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
-                      {item?.advance}
-                  </td>
-                  <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
-                      {item?.amount-item?.advance}
-                  </td>
-                  <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
-                      {item?.numberofguest}
-                  </td>
-              </tr>
+  {order?.map((item, index) => (
+    <tr key={index} class="bg-gray-100 text-center dark:bg-gray-800">
+      <td class="px-6 text-center py-4 border-b border-gray-300 px-6 py-4 border-r">
+        {item?.guest}
+      </td>
+      <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
+        {format(new Date(item?.dateofbook), 'dd-MM-yyyy')}
+      </td>
+      <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
+        {item?.advance}
+      </td>
+      <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
+        {item?.amount - item?.advance}
+      </td>
+      <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
+        {item?.numberofguest}
+      </td>
+      
+      <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
 
-            ))}
-          
-        </tbody>
+        {item?.dateofbook <=formattedDate&&item.orderStatus=="Not completed" ? ( 
+          <button
+          onClick={()=>{sendCompletecode(item._id)}}
+            type="button"
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:from-red-600 hover:via-red-500 hover:to-red-400 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+          >
+            Complete
+          </button>
+        ) : (
+          <span>-</span>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
+
     </table>
 </div>
 

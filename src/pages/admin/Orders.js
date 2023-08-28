@@ -27,6 +27,9 @@ getOrders()
   return (
     <div>
         <Navbaradmin/>
+        
+        <div className='w-full text-center 3xl font-bold'>ORDERS</div>
+
       
 <div class="relative overflow-x-auto">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

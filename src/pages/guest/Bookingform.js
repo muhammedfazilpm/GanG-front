@@ -2,18 +2,18 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import toast  from 'react-hot-toast'
 
 const Bookingform = () => {
   const navigate = useNavigate();
+  const [errors,setErrors]=useState({})
   const [location, setLocation] = useState([]);
-  const [dateError, setDateError] = useState('');
   const [formData, setFormData] = useState({
     name: "",
     location: "",
     date: "",
     numberOfPersons: "",
   });
+
 
   const getLocation = async () => {
     try {
@@ -45,19 +45,46 @@ const Bookingform = () => {
       ...prevData,
       [name]: value,
     }));
-   
+  
+
 
   };
 
   const handleSubmit = async (event) => {
-    localStorage.setItem("formData", JSON.stringify(formData));
     event.preventDefault();
-    navigate("/guest/guidelist", { state: formData });
+    const newErrors={}
+  
+  
+      if(!formData.name){
+        newErrors.name="Name is required"
+      }
+      if(!formData.location){
+        newErrors.location="Location required"
+      }
+      if(!formData.date){
+        newErrors.date="Please select a date"
+      }
+      if(!formData.numberOfPersons){
+        newErrors.numberOfPersons="Enter the count"
+      }
+      if(Object.keys(newErrors).length>0){
+        setErrors(newErrors)
+      }
+      else{
+        localStorage.setItem("formData", JSON.stringify(formData));
+      
+      navigate("/guest/guidelist", { state: formData });
+  
+      }
+
+    
+   
+    
   };
 
   return (
     <div
-      style={{ display: "flex", height: "85vh", marginTop: "0",background:'wheat'}}
+      style={{ display: "flex", minHeight: "85vh", marginTop: "0",background:'wheat'}}
       className="p-8"
     >
       <div
@@ -69,11 +96,12 @@ const Bookingform = () => {
           paddingRight: "10%",
           paddingTop: "10%",
           marginTop: "0",
-          height: "85vh",
+          minHeight: "85vh",
         }}
       >
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
+            {errors.name&&!formData.name&&<p className="text-white">{errors.name}</p>}
             <label className="block mb-1 font-medium" htmlFor="name">
               Name
             </label>
@@ -84,10 +112,10 @@ const Bookingform = () => {
               value={formData.name}
               onChange={handleInputChange}
               className="w-full p-2 border border-gray-300 rounded"
-              required
             />
           </div>
           <div>
+            {errors.location&&!formData.location&&<p className="text-white">{errors.location}</p>}
             <label className="block mb-1 font-medium" htmlFor="location">
               Location
             </label>
@@ -110,6 +138,7 @@ const Bookingform = () => {
             </select>
           </div>
           <div>
+            {errors.date&&!formData.date&&<p className="text-white">{errors.date}</p>}
             <label className="block mb-1 font-medium" htmlFor="date">
               Date
             </label>
@@ -121,13 +150,14 @@ const Bookingform = () => {
   onChange={handleInputChange}
   min={new Date().toISOString().split('T')[0]}
   className="w-full p-2 border border-gray-300 rounded"
-  required
+  // required
 />
 
           
 
           </div>
           <div>
+            {errors.numberOfPersons&&!formData.numberOfPersons&&<p className="text-white">{errors.numberOfPersons}</p>}
             <label className="block mb-1 font-medium" htmlFor="numberOfPersons">
               Number of Persons
             </label>
@@ -138,12 +168,12 @@ const Bookingform = () => {
               value={formData.numberOfPersons}
               onChange={handleInputChange}
               className="w-full p-2 border border-gray-300 rounded"
-              required
+              // required
             />
           </div>
           <div>
             <button
-              style={{ background: "black" }}
+              style={{ background: "maroon" }}
               type="submit"
               className="w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
             >
