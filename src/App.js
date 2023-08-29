@@ -29,6 +29,7 @@ import Editprofile from "./pages/guide/Editprofile";
 import Orderguide from "./pages/guide/Orderguide";
 import Guidechat from "./pages/guide/Guidechat";
 import Completeform from "./pages/guide/Completeform";
+import Dashboardguide from "./pages/guide/Dashboardguide";
 
 //guest pages
 import Registerguest from "./pages/guest/Registerguest";
@@ -155,6 +156,14 @@ function App() {
           element={
             <Protectedroute>
               <Orderguide />
+            </Protectedroute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <Protectedroute>
+              <Dashboardguide/>
             </Protectedroute>
           }
         />
