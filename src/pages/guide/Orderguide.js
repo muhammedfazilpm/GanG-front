@@ -8,13 +8,12 @@ import { format } from 'date-fns'
 import io from 'socket.io-client';
 import axios from 'axios'
 
+
 export default function Orderguide() {
     const [orders,setOrders]=useState([])
 
     const socket=io.connect("http://localhost:5000")
-    // useEffect(()=>{
-    //   navigate('/admin/chat',{orders})
-    // },[socket])
+
     const navigate=useNavigate()
     const sendCompletecode=async(id)=>{
         
@@ -35,6 +34,7 @@ export default function Orderguide() {
     }
    
    const getOrder=async ()=>{
+    
     guideRequest({
         url:"/api/guide/getOrder",
         method:'post'
@@ -61,6 +61,11 @@ export default function Orderguide() {
     useEffect(()=>{
     getOrder()
     },[])
+    const startChat=(id)=>{
+     
+
+      navigate("/guide/chat",{state:id})
+    }
 
 // Convert to Date object
 const date = new Date();
@@ -103,6 +108,11 @@ const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.00
                 <th scope="col" class="px-6 py-3 border-b border-gray-300">
                     Make complete
                 </th>
+                <th scope="col" class="px-6 py-3 border-b border-gray-300">
+                    Chat
+                </th>
+
+
 
             </tr>
         </thead>
@@ -127,7 +137,7 @@ const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.00
       
       <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
 
-        {item?.dateofbook <=formattedDate&&item.orderStatus=="Not completed" ? ( 
+        {item?.dateofbook <=formattedDate&&item.orderStatus==="Not completed" ? ( 
           <button
           onClick={()=>{sendCompletecode(item._id)}}
             type="button"
@@ -139,6 +149,11 @@ const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.00
           <span>-</span>
         )}
       </td>
+      <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
+      <button onClick={()=>{startChat(item._id)}} type="button" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Chat</button>
+       
+      </td>
+
     </tr>
   ))}
 </tbody>

@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import io from "socket.io-client";
 import Navbar from "./Navbar";
+import { useLocation } from "react-router-dom";
+import { guideRequest } from '../../axios'
+
 
 export default function Guidechat({ username }) {
   const socket = io.connect("http://localhost:5000");
@@ -9,11 +12,14 @@ export default function Guidechat({ username }) {
   const [currentmessage, setCurrentmessage] = useState("");
   const [messagelist, setMessagelist] = useState([]);
   const [recievdmessage,setRecievedmessage]=useState([]);
+  const [userid,setUserid]=useState('')
+  const location=useLocation()
+  const data=location.state
   const sendmessage = async () => {
     if (currentmessage !== 0) {
       const messageData = {
-        room: "64dd4a9d8cfda8f5ce68a8fd",
-        author: username,
+        room: data,
+        author: userid,
         message: currentmessage,
         time:
           new Date(Date.now()).getHours() +
@@ -23,22 +29,55 @@ export default function Guidechat({ username }) {
       await socket.emit("send_message", messageData);
       setMessagelist((list) => [...list, messageData]);
     }
-  }; 
+  };
+  const getGuide=async()=>{
+    
+
+
+   await guideRequest({
+      url:"/api/guide/getsenderId",
+      method:'post'
+
+  }).then((response)=>{
+
+      if(response.data.success){
+        setUserid(response.data.id)
+
+      }else{
+      
+      }
+     
+  }).catch((err)=>{
+    
+      console.log(err)
+  
+  
+  })
+
+
+  }
   useEffect(()=>{
-   const id="64dd4a9d8cfda8f5ce68a8fd"
- socket.emit("join-room",id)    
-     console.log("socket",socket)
+    socket.emit("join-room",data)
+    getGuide()
   },[])
+  
+
   useEffect(() => {
-    socket.on("recive_message", (data) => {
-      console.log("recieve message",data)
-      setRecievedmessage((list) => [...list, data]);
+    socket.on("receive_message", (data) => {
+      console.log("recieve guide ",data)
+      const data2=data.author
+      console.log(data2,"data2")
+      if(data2!==userid){
+        setRecievedmessage( [data.message]);
+
+      }
      
     });
   });
   return (
     <div>
         <Navbar/>
+        
       <div className="w-full flex-1 p-2 sm:p-6 justify-between flex flex-col h-screen">
         <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
           <div className="relative flex items-center space-x-4">
@@ -96,13 +135,8 @@ export default function Guidechat({ username }) {
           <div className="chat-message">
             <div className="flex items-end">
               <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-               {}
-                <div>
-                  <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
-                    Check the line above (it ends with a # so, I'm running it as
-                    root )<pre># npm install -g @vue/devtools</pre>
-                  </span>
-                </div>
+        
+               {recievdmessage}
               </div>
               <img
                 src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"

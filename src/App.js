@@ -6,7 +6,7 @@ import "./App.css";
 import GuideContext from "./pages/context";
 import { useState } from "react";
 import axios from "axios";
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 
 import Guesthome from "./pages/guesthome/Guesthome";
@@ -67,9 +67,8 @@ import Guidebanner from "./pages/admin/Guidebanner";
 import Editguidebanner from "./pages/admin/Editguidebanner";
 import Guestbanner from "./pages/admin/Guestbanner";
 
-import Chating from "./pages/Chating";
-const socket=io.connect("http://localhost:5000")
-console.log(socket)
+import Chating from "./pages/guest/Chating";
+
 
 function App() {
   const [guide, setGuide] = useState([]);

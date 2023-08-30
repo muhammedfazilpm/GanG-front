@@ -2,23 +2,26 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
-import Navbarguest from "./guest/Navbarguest";
+import Navbarguest from "./Navbarguest";
+import { guestRequest } from "../../axios";
+
+const socket = io.connect("http://localhost:5000");
+
 export default function Chating({ username }) {
   const location = useLocation();
-  console.log("location", location);
-  const room = location.state;
-  console.log("room", room);
-  const socket = io.connect("http://localhost:5000");
-
+  const data = location.state;
+ 
   const [currentmessage, setCurrentmessage] = useState("");
   const [messagelist, setMessagelist] = useState([]);
   const [recievemessagelist, setrecieveMessagelist] = useState([]);
+  const [userid,setUserid]=useState("")
+
 
   const sendmessage = async () => {
     if (currentmessage !== 0) {
       const messageData = {
-        room: room,
-        author: username,
+        room: data,
+        author: userid,
         message: currentmessage,
         time:
           new Date(Date.now()).getHours() +
@@ -29,10 +32,41 @@ export default function Chating({ username }) {
       setMessagelist((list) => [...list, messageData]);
     }
   };
+const getGuest=async()=>{
+ await guestRequest({
+    url: "/api/guest/getguestId",
+    method: "post",
+  })
+    .then((response) => {
+      if(response.data.success){
+          setUserid(response.data.id)
+      }
+      
+      
+    })
+    .catch((err) => {
+      console.log(err);
+      // localStorage.removeItem("guesttoken");
+      // Navigate("/guest/login");
+    });
+  
+}
+
+useEffect(()=>{
+  socket.emit("join-room",data)
+
+  getGuest()
+},[])
+
   useEffect(() => {
-    socket.on("recive_message", (data) => {
-      setrecieveMessagelist((list) => [...list, data]);
-      console.log("recieved",data);
+    socket.on("receive_message", (data) => {
+      const data2=data.author
+      if (data2!==userid) {
+        setrecieveMessagelist((list) => [...list, data.message]);
+
+        
+      }
+      
     });
   });
   return (
@@ -107,8 +141,7 @@ export default function Chating({ username }) {
                  })}
                 <div>
                   <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
-                    Check the line above (it ends with a # so, I'm running it as
-                    root )<pre># npm install -g @vue/devtools</pre>
+                   {recievemessagelist}
                   </span>
                 </div>
               </div>
