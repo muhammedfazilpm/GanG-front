@@ -7,11 +7,15 @@ import image2 from "./assets/homeimage2.jpg";
 import image3 from "./assets/home3.jpg";
 import Footerguest from "./Footerguest";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 export default function Homeguest() {
+  const dispatch=useDispatch()
   const[banner,setBanner]=useState('')
   const getData = async () => {
     try {
+   dispatch(showloading())
       const response = await axios.post(
         "/api/guest/getUser",
         {},
@@ -21,9 +25,10 @@ export default function Homeguest() {
           },
         }
       );
-
+     dispatch(hideloading())
       setBanner(response.data.data2)
     } catch (error) {
+      dispatch(hideloading())
       console.log(error);
     }
   };

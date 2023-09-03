@@ -4,9 +4,12 @@ import axios from 'axios';
 import toast from 'react-hot-toast'
 import {useNavigate} from 'react-router-dom'
 import  { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { hideloading, showloading } from '../../redux/alertSlice';
 
 
 export default function Guestbanner() {
+  const dispatch=useDispatch()
     const navigate=useNavigate()
     const [bannername, setBanner] = useState("");
     const [image, setSelectedImage] = useState([]);
@@ -32,7 +35,7 @@ export default function Guestbanner() {
     const handleSubmit = async (e) => {
       e.preventDefault(); 
       try {
-        
+        dispatch(showloading())
         const formData = new FormData()
       
         formData.append("heading", bannername);
@@ -51,6 +54,7 @@ export default function Guestbanner() {
       Authorization: "Bearer " + localStorage.getItem("admintoken")
     },
   });
+  dispatch(hideloading())
   if(response.data.success){
         toast.success(response.data.message)
         navigate('/admin/banners')
@@ -59,6 +63,7 @@ export default function Guestbanner() {
   }
         
       } catch (error) {
+        dispatch(hideloading())
         toast.error("something went wrong try again")
       }
     };

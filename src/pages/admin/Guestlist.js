@@ -2,33 +2,40 @@ import React from 'react'
 import Navbaradmin from './Navbaradmin'
 import { useEffect,useState } from 'react'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { hideloading, showloading } from '../../redux/alertSlice'
+
 
 export default function Guestlist() {
+  const dispatch=useDispatch()
       const [guest,guestSet]=useState([])
       const getGuest=async()=>{
         try {
+          dispatch(showloading())
             const response= await axios.get('/api/admin/getGuest')
-           
+           dispatch(hideloading())
             if(response.data.success){
                 
                 guestSet(response.data.data)
             }
         } catch (error) {
+          dispatch(hideloading())
             console.log(error)
         }
         }
 
         const blockGuest=async(id)=>{
           try {
-           
+           dispatch(showloading())
             const response=await axios.post('/api/admin/blockGuest',{id})
-            console.log("oooooooo")
+           dispatch(hideloading())
             if(response.data.success){
               console.log("hfisafi")
             window.location.reload();
               
             }
           } catch (error) {
+            dispatch(hideloading())
             
           }
         }

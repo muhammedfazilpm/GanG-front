@@ -1,13 +1,15 @@
 import React from 'react'
 import axios from 'axios'
 import { useEffect,useState } from 'react'
-import image from './assets/homeimg.jpg'
+import { useSelector,useDispatch } from 'react-redux';
 import 'tailwindcss/tailwind.css';
 import Navbar from './Navbar';
+import { hideloading, showloading } from '../../redux/alertSlice';
 
 
 
-export default function Home() {
+export default function Home() {  
+  const dispatch=useDispatch()
   
   const[banner,bannerSet]=useState([])
 
@@ -15,6 +17,7 @@ export default function Home() {
   
 const getData=async()=>{
   try {
+    dispatch(showloading())
     const response=await axios.post('/api/guide/getUser',{},
     {
       headers:{
@@ -22,12 +25,13 @@ const getData=async()=>{
       }
 
     })
-
+dispatch(hideloading())
   if(response.data.success){
     bannerSet(response.data.banner)
   }
     
   } catch (error) {
+    dispatch(hideloading())
     console.log(error)
   }
 }

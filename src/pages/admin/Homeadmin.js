@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbaradmin from "./Navbaradmin";
-import ReactApexChart from 'react-apexcharts';
+import ReactApexChart from 'react-apexcharts'
+import { useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 export default function Homeadmin() {
+  const dispatch=useDispatch()
   const [guidecount, setGuidecount] = useState(null);
   const [guestcount, setGuestcount] = useState(null);
   const [ordercount, setOrdercount] = useState(null);
@@ -15,6 +18,8 @@ export default function Homeadmin() {
 
   const getData = async () => {
     try {
+      dispatch(showloading())
+      console.log("before request")
       const response = await axios.post(
         "/api/admin/getAdmin",
         {},
@@ -24,6 +29,7 @@ export default function Homeadmin() {
           },
         }
       );
+      dispatch(hideloading())
       if (response.data.success) {
         setGuidecount(response.data.guidecount);
         setGuestcount(response.data.guestcount);
@@ -33,8 +39,8 @@ export default function Homeadmin() {
         setFirstplacecount(response.data.firstplacecount);
         setOrder(response.data.order);
       }
-      console.log(response);
     } catch (error) {
+      dispatch(hideloading())
       console.log(error);
     }
   };

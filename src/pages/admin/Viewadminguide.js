@@ -8,8 +8,11 @@ import axios from "axios";
 import "flowbite";
 import toast from "react-hot-toast";
 import Rating from "../guest/Rating";
+import { useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 export default function Viewadminguide() {
+  const dispatch=useDispatch()
   const [details, setDetails] = useState({});
   const [review,setReview]=useState([])
   const [avgrating,setRating]=useState(null)
@@ -19,20 +22,25 @@ export default function Viewadminguide() {
   const id = guides._id;
   const getdetails = async () => {
     try {
+      dispatch(showloading())
       const response = await axios.post("/api/admin/getdetails", { id: id });
+      dispatch(hideloading())
       setDetails(response.data.data);
       setReview(response.data.reviews)
       setRating(response.data.average)
     } catch (error) {
+      dispatch(hideloading())
       console.log(error);
     }
   };
 
   const changestatus = async () => {
     try {
+      dispatch(showloading())
       const response = await axios.post("/api/admin/verifyguide", {
         id: details.guidid,
       });
+      dispatch(hideloading())
       if (response.data.success) {
         toast.success(response.data.message);
         navigate("/admin/guide");
@@ -41,6 +49,7 @@ export default function Viewadminguide() {
         toast.error(response.data.message);
       }
     } catch (error) {
+      dispatch(hideloading())
       toast.error("something went wrong");
     }
   };

@@ -5,7 +5,7 @@ export default function Footerguest() {
     <footer style={{background:'maroon'}} className="bg-gray-800 text-white py-4">
     <div className="container mx-auto text-center">
       <p className="text-sm">
-        © {new Date().getFullYear()} Your Company. All rights reserved.
+        © {new Date().getFullYear()} GanG Guest And Guide. All rights reserved.
       </p>
       <div className="mt-2">
         <a

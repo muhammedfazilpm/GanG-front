@@ -3,26 +3,32 @@ import {Form,Input,Button} from 'antd'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
 // import './Otp.css'
 import './Forget.css'
+import { hideloading, showloading } from '../../redux/alertSlice'
 
 export default function Forget() {
+  const dispatch=useDispatch()
   const navigate=useNavigate()
   const onFinish=async(values)=>{
     
     try {
-     
+     dispatch(showloading())
       const response=await axios.post('/api/guide/reset',values)
       
       if(response.data.success){
+        dispatch(hideloading())
          toast.success(response.data.message)
          navigate("/resetpass")
       }
 
       else{
+        dispatch(hideloading())
         toast.error(response.data.message)
       }
     } catch (error) {
+      dispatch(hideloading())
       toast.error("something went wrong")
     }
   }

@@ -6,6 +6,9 @@ import "./App.css";
 import GuideContext from "./pages/context";
 import { useState } from "react";
 import axios from "axios";
+import { BallTriangle } from  'react-loader-spinner'
+import { useSelector } from "react-redux";
+
 // import io from 'socket.io-client';
 
 
@@ -71,6 +74,7 @@ import Chating from "./pages/guest/Chating";
 
 
 function App() {
+  const {loading}=useSelector((state)=>state.alerts)
   const [guide, setGuide] = useState([]);
   const guidedata = {
     guide,
@@ -93,6 +97,23 @@ function App() {
 
   return (
     <BrowserRouter>
+    {loading&&(
+        <div className="spinner-parent">
+       <BallTriangle
+  height={200}
+  width={200}
+  radius={5}
+  color="#4fa94d"
+  ariaLabel="ball-triangle-loading"
+  wrapperClass={{}}
+  wrapperStyle=""
+  visible={true}
+/>
+    
+        </div>
+
+    )}
+  
       <Toaster position="top-center" reverseOrder={false} />
 
       <Routes>

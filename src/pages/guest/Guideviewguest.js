@@ -5,8 +5,11 @@ import { useEffect,useState } from "react";
 import axios from 'axios'
 import { useLocation } from "react-router-dom";
 import Rating from "./Rating";
+import { useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 export default function Guideviewguest() {
+  const dispatch=useDispatch()
   const[rating,setRating]=useState(null)
   const [review,setReview]=useState([])
  
@@ -20,13 +23,19 @@ export default function Guideviewguest() {
   const id=itmData._doc.guidid
   const getReview=async()=>{
     try {
+      dispatch(showloading())
  const response=await axios.post('/api/guest/getReview',{id})
  if(response.data.success){
+  dispatch(hideloading())
   setReview(response.data.data)
   setRating(response.data.rate)
  }
+ else{
+  dispatch(hideloading())
+ }
       
     } catch (error) {
+      dispatch(hideloading)
       console.log(error)
       
     }

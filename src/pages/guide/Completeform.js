@@ -5,12 +5,14 @@ import axios from 'axios'
 import { useLocation } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { hideloading, showloading } from '../../redux/alertSlice'
 
 export default function Completeform() {
   const navigate=useNavigate()
   const location=useLocation()
   const data=location.state
-  
+  const dispatch =useDispatch()
   const [otp,setOtp]=useState("")
   const handleinputchange=(e)=>{
     setOtp(e.target.value)
@@ -18,16 +20,20 @@ export default function Completeform() {
   const handleSubmit=async()=>{
    
     try {
+      dispatch(showloading())
       const response=await axios.post('/api/guide/checkcode',{otp,data})
       if(response.data.success){
+        dispatch(hideloading())
         toast.success(response.data.message)
         navigate('/orders')
 
       }else{
+        dispatch(hideloading())
         toast.error(response.data.message)
       }
       
     } catch (error) {
+      dispatch(hideloading())
       toast.error("try again")
     }
   }

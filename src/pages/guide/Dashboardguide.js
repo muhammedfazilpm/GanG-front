@@ -4,10 +4,12 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import { useState } from 'react'
 import ReactApexChart from'react-apexcharts'
+import { useDispatch } from 'react-redux'
+import { hideloading, showloading } from '../../redux/alertSlice'
 
 
 export default function Dashboardguide() {
-
+const dispatch=useDispatch()
  
  
     const [orders,setOrders]=useState([])
@@ -18,6 +20,7 @@ export default function Dashboardguide() {
 
     const getOrderdetails=async()=>{
         try {
+          dispatch(showloading())
             const response = await axios.post(
                 "/api/guide/getorders",
                 {},
@@ -28,6 +31,7 @@ export default function Dashboardguide() {
                 }
               );
               if(response.data.success){
+                dispatch(hideloading())
                 setOrdercount(response.data.ordercount)
                 setCompleted(response.data.completed)
                 setTotal(response.data.totalamount)
@@ -35,6 +39,7 @@ export default function Dashboardguide() {
               }
             
         } catch (error) {
+          dispatch(hideloading())
             
         }
     }

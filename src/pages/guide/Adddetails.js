@@ -4,9 +4,12 @@ import { useState } from "react";
 import axios from "axios";
 import toast from 'react-hot-toast'
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 
 export default function Adddetails() {
+  const dispatch=useDispatch()
   const [selectedImage, setSelectedImage] = useState(null);
  
   const [selectedOption, setSelectedOption] = useState("");
@@ -19,12 +22,16 @@ export default function Adddetails() {
   const navigate=useNavigate()
 
 
-  const getLocation=async(req,res)=>{
+  const getLocation=async()=>{
+    
     try {
+      dispatch(showloading())
        const response=await axios.post('/api/guide/getlocations')
+       dispatch(hideloading())
        setLocation(response.data.data)
        
     } catch (error) {
+      dispatch(hideloading())
         console.log("getlocation",error)
     }
   }
@@ -36,6 +43,7 @@ console.log("location",location)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      dispatch(showloading())
         
         const formData = new FormData();
         formData.append('image', selectedImage);
@@ -55,13 +63,16 @@ console.log("location",location)
           },
         });
         if(response.data.success){
+          dispatch(hideloading())
  toast.success(response.data.message)
  navigate('/profile')
         }
       else{
+        dispatch(hideloading())
         toast.error(response.data.message)
       }
     } catch (error) {
+      dispatch(hideloading())
       toast.error("something went wrong")
       console.log(error);
     }

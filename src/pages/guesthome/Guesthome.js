@@ -14,6 +14,7 @@ export default function Guesthome() {
   return (
     <div className="guestpagebody">
       <div className="guestpageheader">
+      
         <h1>GanG</h1>
         <p>A complete Guest ANd Guide solusion </p>
       </div>

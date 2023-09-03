@@ -4,15 +4,19 @@ import { Button } from "antd";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Rating from "../guest/Rating";
+import { useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 
 export default function Profile() {
+  const dispatch=useDispatch()
   const [profile, setData] = useState([]);
   const [Details, setdetails] = useState([]);
   const [review,setReview]=useState([])
   const[rating,setRating]=useState(null)
   const getProfile = async () => {
     try {
+      dispatch(showloading())
       const response = await axios.post(
         "/api/guide/getProfile",
         {},
@@ -22,11 +26,13 @@ export default function Profile() {
           },
         }
       );
+      dispatch(hideloading())
       setData(response.data.data);
       setdetails(response.data.details);
       setReview(response.data.reviews)
       setRating(response.data.average)
     } catch (error) {
+      dispatch(hideloading())
       console.log(error);
     }
   };

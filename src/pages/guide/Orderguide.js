@@ -5,47 +5,52 @@ import { guideRequest } from '../../axios'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { format } from 'date-fns'
-import io from 'socket.io-client';
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { hideloading, showloading } from '../../redux/alertSlice'
 
 
 export default function Orderguide() {
+  const dispatch=useDispatch()
     const [orders,setOrders]=useState([])
-
-    const socket=io.connect("http://localhost:5000")
-
     const navigate=useNavigate()
     const sendCompletecode=async(id)=>{
         
        try {
+        dispatch(showloading())
         const response=await axios.post("api/guide/sendcomplete",{id})
         if(response.data.success){
+          dispatch(hideloading())
             toast.success(response.data.message)
             navigate("/guide/ordercomplete",{state:response.data.data})
         }
         else{
+          dispatch(hideloading())
             toast.error(response.data.message)
         }
         
        } catch (error) {
+        dispatch(hideloading())
         toast.error("try again")
         
        }
     }
    
    const getOrder=async ()=>{
-    
+    dispatch(showloading())
     guideRequest({
         url:"/api/guide/getOrder",
         method:'post'
 
     }).then((response)=>{
+      dispatch(hideloading())
 
         if(response.data.success){
-            console.log("order",response.data.data)
+          dispatch(hideloading())
             setOrders(response.data.data)
 
         }else{
+          dispatch(hideloading())
           toast.error(response.data.message)
         }
        
@@ -61,10 +66,10 @@ export default function Orderguide() {
     useEffect(()=>{
     getOrder()
     },[])
-    const startChat=(id)=>{
+    const startChat=(id,guide)=>{
      
 
-      navigate("/guide/chat",{state:id})
+      navigate("/guide/chat",{state:{id,guide}})
     }
 
 // Convert to Date object
@@ -150,7 +155,7 @@ const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.00
         )}
       </td>
       <td class="px-6 py-4 border-b border-gray-300 px-6 py-4 border-r">
-      <button onClick={()=>{startChat(item._id)}} type="button" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Chat</button>
+      <button onClick={()=>{startChat(item._id,item.guideid)}} type="button" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Chat</button>
        
       </td>
 

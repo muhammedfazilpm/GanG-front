@@ -3,9 +3,12 @@ import Navbaradmin from './Navbaradmin';
 import axios from 'axios';
 import toast from 'react-hot-toast'
 import {useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { hideloading, showloading } from '../../redux/alertSlice';
 
 
 export default function Guidebanner() {
+  const dispatch=useDispatch()
   const navigate=useNavigate()
   const [bannername, setBanner] = useState("");
   const [image, setSelectedImage] = useState(null);
@@ -23,7 +26,6 @@ export default function Guidebanner() {
   const handleImagechange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log("imagefile",file)
       setSelectedImage(file);
     }
   };
@@ -39,13 +41,14 @@ export default function Guidebanner() {
       formData.append("description", bannerdes);
      
      
-    
+    dispatch(showloading())
      const response = await axios.post("/api/admin/addbanner", formData, {
   headers: {
     'Content-Type': 'multipart/form-data',
     Authorization: "Bearer " + localStorage.getItem("admintoken")
   },
 });
+dispatch(hideloading())
 if(response.data.success){
       toast.success(response.data.message)
       navigate('/admin/banners')
@@ -55,6 +58,7 @@ if(response.data.success){
       
       console.log("how are you",formData)
     } catch (error) {
+      dispatch(hideloading())
       toast.error("something went wrong try again")
     }
   };

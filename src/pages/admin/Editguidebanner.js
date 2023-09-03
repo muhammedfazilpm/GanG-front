@@ -5,12 +5,14 @@ import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { hideloading, showloading } from '../../redux/alertSlice'
 
 export default function Editguidebanner() {
+  const dispatch=useDispatch()
     const navigate=useNavigate()
     const location=useLocation()
     const data=location.state
-    console.log("heading",data.heading)
     const [bannername, setBanner] = useState(data.heading);
   const [image, setSelectedImage] = useState(data.guidebanner);
   const [bannerdes, setBannerdiscr] = useState(data.description);
@@ -41,13 +43,14 @@ export default function Editguidebanner() {
       formData.append("description", bannerdes);
      
      
-    
+    dispatch(showloading())
      const response = await axios.post("/api/admin/addbanner", formData, {
   headers: {
     'Content-Type': 'multipart/form-data',
     Authorization: "Bearer " + localStorage.getItem("admintoken")
   },
 });
+dispatch(hideloading())
 if(response.data.success){
       toast.success(response.data.message)
       navigate('/admin/banners')
@@ -57,6 +60,7 @@ if(response.data.success){
       
       console.log("how are you",formData)
     } catch (error) {
+      dispatch(hideloading())
       toast.error("something went wrong try again")
     }
   };

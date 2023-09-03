@@ -4,20 +4,27 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { hideloading, showloading } from '../../redux/alertSlice'
 
 export default function Banners() {
+    const dispatch=useDispatch()
     const[guidebanner,setGuidebanner]=useState('')
     const [guestbanner,setGuestbanner]=useState('')  
     const navigate=useNavigate()
     const getbanner=async()=>{
         try {
+            dispatch(showloading())
+
             const response=await axios.get('/api/admin/getbanner')
+            dispatch(hideloading())
             if(response.data.success){
                 setGuidebanner(response.data.data)
                 setGuestbanner(response.data.data2)
                 
             }
         } catch (error) {
+            dispatch(hideloading())
             console.log("error")
             
         }

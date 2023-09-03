@@ -5,16 +5,19 @@ import axios from "axios";
 import { guideRequest } from "../../axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 // Initialization for ES Users
 import {
   Input,
   initTE,
 } from "tw-elements";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 initTE({ Input });
 
 
 export default function Editprofile() {
+  const dispatch=useDispatch()
   const [guide, setGuide] = useState([]);
   const [details,setDetails]=useState([])
   const [inputValue, setInputValue] = useState("");
@@ -43,6 +46,7 @@ export default function Editprofile() {
     e.preventDefault();
     console.log("entry");
     try {
+      dispatch(showloading())
       const formData = new FormData();
       formData.append("name", inputValue);
       formData.append("phone", inputValue2);
@@ -55,26 +59,30 @@ export default function Editprofile() {
         },
       });
       if (response.data.success) {
+        dispatch(hideloading())
         toast.success(response.data.message);
         navigate("/profile");
       } else {
+        dispatch(hideloading())
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error("Check the form details");
+      dispatch(hideloading())
+      toast.error("check the uploaded image");
       console.log(error);
     }
   };
   const getUser=async()=>{
+    dispatch(showloading())
     guideRequest({
       url: "/api/guide/getProfile",
       method:'post'
     }).then((response)=>{
-          console.log("res",response)
+      dispatch(hideloading())
       setGuide(response.data.data);
       setDetails(response.data.details)
     }).catch((err)=>{
-      console.log("err",err)
+      dispatch(hideloading())
       localStorage.removeItem('token')
       navigate('/login')
     })

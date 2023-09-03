@@ -4,8 +4,11 @@ import axios from "axios";
 import { Button } from "antd";
 import Navbaradmin from "./Navbaradmin";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 export default function Location() {
+  const dispatch=useDispatch()
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -14,10 +17,12 @@ export default function Location() {
 
   const getDetails = async () => {
     try {
+      dispatch(showloading())
       const response = await axios.post("/api/admin/getlocation");
-
+dispatch(hideloading())
       setData(response.data.data);
     } catch (error) {
+      dispatch(hideloading())
       console.log(error);
     }
   };

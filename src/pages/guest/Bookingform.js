@@ -2,8 +2,11 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { shallowEqual, useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 const Bookingform = () => {
+  const dispatch=useDispatch()
   const navigate = useNavigate();
   const [errors,setErrors]=useState({})
   const [location, setLocation] = useState([]);
@@ -17,16 +20,18 @@ const Bookingform = () => {
 
   const getLocation = async () => {
     try {
+      dispatch(showloading())
       const response = await axios.post("/api/guest/getlocation");
       if (response) {
-         
+         dispatch(hideloading())
         setLocation(response.data.data);
         
       } else {
-        console.log('err');
+        dispatch(hideloading())
+
       }
     } catch (error) {
-      console.log(error);
+      dispatch(hideloading())
     }
   };
   useEffect(() => {

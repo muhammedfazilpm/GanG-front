@@ -5,25 +5,29 @@ import { Button,Form,Input} from 'antd';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { hideloading, showloading } from '../../redux/alertSlice';
 
 
 export default function Register() {
+  const dispatch=useDispatch()
   const navigate=useNavigate()
   const onFinish= async(values)=>{
    try {
-   console.log(values)
+   dispatch(showloading())
     const response=await axios.post("/api/guide/register",values)
     if(response.data.success){
+      dispatch(hideloading())
         toast.success(response.data.message)
             navigate("/otp")
     }
     else{
-      
+      dispatch(hideloading())
 toast.error(response.data.message)
     }
     
    } catch (error) {
-    console.log(error);
+    dispatch(hideloading())
     
 toast.error("some thing went wrong")
    }

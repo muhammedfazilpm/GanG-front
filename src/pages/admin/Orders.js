@@ -4,12 +4,17 @@ import { useEffect,useState } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import {format} from 'date-fns'
+import { useDispatch } from 'react-redux'
+import { hideloading, showloading } from '../../redux/alertSlice'
 
 export default function Orders() {
+    const dispatch=useDispatch()
     const[order,setOrder]=useState([])
 const getOrders=async()=>{
     try {
+        dispatch(showloading())
         const response=await axios.get('/api/admin/getOrders')
+        dispatch(hideloading())
         if(response.data.success){
                setOrder(response.data.data)
         }
@@ -17,6 +22,7 @@ const getOrders=async()=>{
             toast.error(response.data.message)
         }
     } catch (error) {
+        dispatch(hideloading())
         toast.error('something went wrong')
     }   
 }

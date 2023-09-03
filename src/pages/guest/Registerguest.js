@@ -5,12 +5,17 @@ import { Button, Form, Input } from "antd";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 export default function Registerguest() {
+  const dispatch=useDispatch()
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
+      dispatch(showloading())
       const response = await axios.post("/api/guest/register", values);
+      dispatch(hideloading())
       if (response.data.success) {
         toast.success(response.data.message);
         navigate("/guest/otp");
@@ -18,6 +23,7 @@ export default function Registerguest() {
         toast.error(response.data.message);
       }
     } catch (error) {
+      dispatch(hideloading())
       console.log(error);
 
       toast.error("some thing went wrong");

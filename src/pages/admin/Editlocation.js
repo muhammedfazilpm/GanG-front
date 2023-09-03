@@ -4,8 +4,11 @@ import Navbaradmin from "./Navbaradmin";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 
 export default function Editlocation() {
+  const dispatch=useDispatch()
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
@@ -27,11 +30,13 @@ export default function Editlocation() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      dispatch(showloading())
       const response = await axios.post("/api/admin/editlocation", {
         id,
         state,
         districts,
       });
+      dispatch(hideloading())
       if (response.data.success) {
         toast.success(response.data.message);
         navigate("/admin/location");
@@ -39,6 +44,7 @@ export default function Editlocation() {
         toast.error(response.data.message);
       }
     } catch (error) {
+      dispatch(hideloading())
       toast.error("something went wrongg");
     }
   };

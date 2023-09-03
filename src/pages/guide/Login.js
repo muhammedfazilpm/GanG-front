@@ -5,16 +5,21 @@ import "./Login.css"
 import axios from 'axios';      
 import toast from 'react-hot-toast';
 import {useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { hideloading, showloading } from '../../redux/alertSlice';
 
 // import Password from 'antd/es/input/Password';
 
 export default function Login() {
+  const dispatch=useDispatch()
   const navigate=useNavigate();
   const onFinish=async(values)=>{
     
     try {
+      dispatch(showloading())
 const response=await axios.post("/api/guide/login",values)
      if(response.data.success){
+      dispatch(hideloading())
       toast.success(response.data.message)
     
       localStorage.setItem("token",response.data.data)
@@ -23,10 +28,12 @@ const response=await axios.post("/api/guide/login",values)
       
      }
      else{
+      dispatch(hideloading())
       toast.error(response.data.message)
      }
       
     } catch (error) {
+      dispatch(hideloading())
       toast.error("some thing went wrong")
     }
   }

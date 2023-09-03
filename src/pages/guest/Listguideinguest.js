@@ -6,11 +6,15 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { loadScript } from 'https://checkout.razorpay.com/v1/checkout.js';
+import { useDispatch } from "react-redux";
+import { hideloading, showloading } from "../../redux/alertSlice";
 export default function Listguideinguest() {
+  const dispatch=useDispatch()
   const navigate = useNavigate();
   const Viewaguide = async (data) => {
+    dispatch(showloading())
     const response = await axios.post("/api/guest/sendDetails", { data });
-    console.log("responseeee", response.data.success);
+    dispatch(hideloading())
     if (response.data.success) {
       navigate("/guest/guideView", { state: response.data });
     }
@@ -28,11 +32,11 @@ export default function Listguideinguest() {
       item.isAdminverified === true &&
       item.isVerfied === true
   );
-  console.log("selected", selectedguide);
-  console.log(formData);
 
   const sendOrder = async (data) => {
+
     try {
+      dispatch(showloading())
       const response = await axios.post(
         "/api/guest/bookorder",
         { data: data, formData: formData },
@@ -42,6 +46,7 @@ export default function Listguideinguest() {
           },
         }
       );
+      dispatch(hideloading())
       if (response.data.success) {
         toast.success(response.data.message);
         razorpayPayment(response.data.data)
@@ -52,7 +57,7 @@ export default function Listguideinguest() {
         toast.error(response.data.message);
       }
     } catch (error) {
-    
+    dispatch(hideloading())
       toast.error("something went wrong");
     }
   };
