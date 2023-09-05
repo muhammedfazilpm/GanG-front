@@ -42,6 +42,9 @@
     "eject": "react-scripts eject",
     "start:react": "react-scripts start"
   },
+  "proxy": "https://globalone.shop",
+
+
   "eslintConfig": {
     "extends": [
       "react-app",
