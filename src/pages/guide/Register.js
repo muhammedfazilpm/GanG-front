@@ -71,9 +71,9 @@ toast.error("some thing went wrong")
     <Form.Item rules={passwordRules} name='password'>
     <Input placeholder='enter your password' type='password' />
     </Form.Item>
-    <div style={{width:'100%',display:'flex !important',justifyContent:'center',background:'red'}} >
+    <div style={{width:'100%',display:'flex !important',justifyContent:'center',background:'red',alignItems:'center'}} >
      <Form.Item >
-    <Button htmlType='submit'  className='button' type="primary">REGISTER</Button>
+    <Button  htmlType='submit'  className='button' type="primary"><h1 style={{width:'100%'}}>REGISTER</h1></Button>
     </Form.Item>
     </div>
     </Form>

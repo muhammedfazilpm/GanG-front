@@ -6,7 +6,7 @@ import { useState } from 'react'
 import ReactApexChart from'react-apexcharts'
 import { useDispatch } from 'react-redux'
 import { hideloading, showloading } from '../../redux/alertSlice'
-
+import Guidefooter from './Guidefooter'
 
 export default function Dashboardguide() {
 const dispatch=useDispatch()
@@ -117,7 +117,7 @@ console.log("orders",orders)
                 </div>
             </div>
         </div>
-      
+      <Guidefooter/>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { hideloading, showloading } from '../../redux/alertSlice'
+import Adminfooter from './Adminfooter'
 
 export default function Editguidebanner() {
   const dispatch=useDispatch()
@@ -140,6 +141,7 @@ if(response.data.success){
           </form>
         </div>
       </div>
+      <Adminfooter/>
     </div>
     
   )

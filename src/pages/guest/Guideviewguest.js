@@ -48,19 +48,21 @@ export default function Guideviewguest() {
     getReview()
   },[])
   return (
-    <div>
+    <div >
       <Navbarguest />
-      <div className="mx-auto grid max-w-4xl grid-cols-12 gap-4 bg-zinc-50 p-1 mt-8">
       
-      <div className="col-span-12 rounded-lg border border-gray-500 bg-gray-200 p-2 sm:col-span-8">
+      <div className="mx-auto  bg-zinc-50 p-1 mt-8">
+        
+            
+      <div className=" col-span-12 rounded-lg border border-gray-500 bg-gray-200 p-2 sm:col-span-8">
       <div>
-        <div
+        <div className="flex justify-center  "
         >
           <a
              class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
             <img
-              class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+              className=" m-10 object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
               src={itmData?.profile}
               alt=""
             />
@@ -122,13 +124,14 @@ export default function Guideviewguest() {
        </div>
        <div className="flex items-center space-x-8">
          <button className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">{item?.rating}</button>
-         <Rating rating={item?.rating}/>
+         
 
 
        </div>
      </div>
 
      <div className="mt-4 mb-6">
+     <Rating rating={item?.rating}/>
        {/* <div className="mb-3 text-xl font-bold">Nulla sed leo tempus, feugiat velit vel, rhoncus neque?</div> */}
        <div className="text-sm text-neutral-600">{item?.review}</div>
      </div>
@@ -155,11 +158,16 @@ export default function Guideviewguest() {
    
  </div>
 ))}
-     
-    
-    
-    
       </div>
+
+
+
+
+
+
+
+
+
      
     </div>
       

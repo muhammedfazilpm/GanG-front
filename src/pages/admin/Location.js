@@ -6,6 +6,8 @@ import Navbaradmin from "./Navbaradmin";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { hideloading, showloading } from "../../redux/alertSlice";
+import Addlocation from "./Addlocation";
+import Adminfooter from "./Adminfooter";
 
 export default function Location() {
   const dispatch=useDispatch()
@@ -94,6 +96,7 @@ dispatch(hideloading())
           </table>
         </div>
       </div>
+      <Adminfooter/>
     </>
   );
 }

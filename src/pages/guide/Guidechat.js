@@ -16,6 +16,7 @@ export default function Guidechat() {
  const dispatch=useDispatch()
   const [currentmessage, setCurrentmessage] = useState("");
   const [messagelist, setMessagelist] = useState([]);
+  const[name,setName]=useState('')
   const location=useLocation()
   const data=location.state
   const id=data.id
@@ -36,8 +37,13 @@ export default function Guidechat() {
   };
 
   const getChatHistory=async()=>{
+    const data={
+      id,
+      userid
+
+    }
    
-   const response= await axios.post('/api/guide/chathistory',{id})
+   const response= await axios.post('/api/guide/chathistory',{data})
    if (response.data.success) {
     const chat=response.data.chat
   for(let i=0;i<chat.length;i++){
@@ -55,6 +61,7 @@ export default function Guidechat() {
    
     
    }
+   setName(response.data.name)
   }
   
   useEffect(()=>{
@@ -88,17 +95,22 @@ useEffect(() => {
     {/* Chat Header */}
     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200 w-full">
       <div className="relative flex items-center space-x-4 w-full">
-        <div className="relative">
-          <span className="absolute text-green-500 right-0 bottom-0">
-            <svg width="20" height="20">
-              <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
-            </svg>
-          </span>
-          {/* Add partner's profile image here */}
-        </div>
+      <div className="relative">
+        <span className="absolute text-green-500 right-0 bottom-0">
+          <svg width="20" height="20">
+            <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
+          </svg>
+        </span>
+        <img
+          src='https://res.cloudinary.com/dft5pexxb/image/upload/v1693729281/l4cnrmtd8ur7xexhlmkz.png'
+          alt=""
+          className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"
+        />
+        
+      </div>
         <div className="flex flex-col leading-tight">
           <div className="text-2xl mt-1 flex items-center">
-            {/* Display partner's name */}
+            {name}
           </div>
           {/* Display partner's job title */}
         </div>

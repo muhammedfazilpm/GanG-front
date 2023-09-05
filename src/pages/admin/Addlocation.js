@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux"; 
 import { hideloading, showloading } from "../../redux/alertSlice";
+import Adminfooter from "./Adminfooter";
 
 export default function Addlocation() {
   const dispatch=useDispatch()
@@ -35,13 +36,13 @@ export default function Addlocation() {
   };
 
   return (
-    <>
+    <div className="h-full p-0">
       <Navbaradmin />
       <p className="text-center mt-4">Addlocation</p>
 
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md dark:bg-gray-800"
+        className="max-w-md h-full mx-auto bg-white p-6 rounded-lg shadow-md dark:bg-gray-800"
       >
         <div className="mb-6">
           <label
@@ -83,6 +84,5 @@ export default function Addlocation() {
           Submit
         </button>
       </form>
-    </>
-  );
+      </div>  );
 }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap'); */
 .ant-form-item-has-error .ant-form-item-explain-error {
   color: rgb(251, 245, 245);
 }
@@ -27,7 +27,7 @@
 .card a{
     margin-right: 25%;
     margin-top: 1%;
-    padding-bottom: 3%;
+    /* padding-bottom: 3%; */
 
     color: rgb(255, 252, 252);
 
@@ -50,6 +50,7 @@
   .card{
     border: 2px solid rgb(248, 245, 245);
     width: 30%;
+    min-width: 300px;
     min-height: 500px;
     background-color:#0c0e11ab;
     
@@ -84,7 +85,6 @@
   }
   .card button{
     display: block;
-    margin-left:40%;
     justify-content: center;
   }
   .sideimage{

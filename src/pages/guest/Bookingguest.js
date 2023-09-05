@@ -4,7 +4,7 @@ import Bookingform from "./Bookingform";
 
 export default function Bookingguest() {
   return (
-    <div>
+    <div style={{height:'100vh'}}>
       <Navbarguest />
       <Bookingform />
     </div>

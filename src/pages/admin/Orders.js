@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import {format} from 'date-fns'
 import { useDispatch } from 'react-redux'
 import { hideloading, showloading } from '../../redux/alertSlice'
+import Adminfooter from './Adminfooter'
 
 export default function Orders() {
     const dispatch=useDispatch()
@@ -102,7 +103,7 @@ getOrders()
         </tbody>
     </table>
 </div>
-
+<Adminfooter/>
     </div>
   )
 }

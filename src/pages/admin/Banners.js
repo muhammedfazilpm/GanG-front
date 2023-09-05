@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { hideloading, showloading } from '../../redux/alertSlice'
+import Adminfooter from './Adminfooter'
 
 export default function Banners() {
     const dispatch=useDispatch()
@@ -84,6 +85,8 @@ export default function Banners() {
         </div>                
     </div>
 </section>
+<Adminfooter/>
     </div>
+    
   )
 }

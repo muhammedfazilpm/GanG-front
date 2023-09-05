@@ -33,6 +33,7 @@
     background-color: rgba(30, 29, 29, 0.862);
     display: flex;
     align-items: center;
+    min-width: 300PX;
     
 }
 .otpform{
@@ -48,6 +49,7 @@
 .inputs input{
     width: 100%;
     font-size: large;
+    border-radius: 2cm;
 }
 .button2{
     margin-left: 4%  !important;

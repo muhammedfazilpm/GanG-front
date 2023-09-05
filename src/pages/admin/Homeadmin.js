@@ -4,6 +4,7 @@ import Navbaradmin from "./Navbaradmin";
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch } from "react-redux";
 import { hideloading, showloading } from "../../redux/alertSlice";
+import Adminfooter from "./Adminfooter";
 
 export default function Homeadmin() {
   const dispatch=useDispatch()
@@ -198,6 +199,7 @@ export default function Homeadmin() {
           {/* Footer content */}
         </footer>
       </div>
+      <Adminfooter/>
     </>
   );
 }

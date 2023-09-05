@@ -7,6 +7,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { hideloading, showloading } from "../../redux/alertSlice";
+import Adminfooter from "./Adminfooter";
 
 export default function Guidelist() {
   const dispatch=useDispatch()
@@ -103,6 +104,7 @@ export default function Guidelist() {
           </div>
         </div>
       </div>
+      <Adminfooter/>
     </div>
   );
 }

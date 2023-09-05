@@ -22,8 +22,10 @@
     height: 80%;
 }
 .guestcard{
-    background-color: rgba(128, 0, 0, 0.96);
-     width:40%;
+    background-color: rgba(128, 0, 0, 0.833);
+    margin-top: 50px;
+    min-width: 300px;
+     width:30%;
     padding-top: 40px;
     min-height: 500px;
     text-align: center;
@@ -43,9 +45,10 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .guestcard input{
-    width: 100%;
+    width: 90%;
     height: 0.8cm;
     padding: 20px;
+    border-radius: 2cm;
 }
 .guestbody button{
     background-color: #e8114a;

@@ -4,6 +4,7 @@ import { useEffect,useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { hideloading, showloading } from '../../redux/alertSlice'
+import Adminfooter from './Adminfooter'
 
 
 export default function Guestlist() {
@@ -53,7 +54,7 @@ export default function Guestlist() {
       <Navbaradmin/>
       <div style={{ overflowX: 'auto',textAlign:'center' }}>
         <h3>GUEST LISTS</h3>
-      <table style={{ overflowX: 'auto' }} className="w-full border border-gray-400">
+      <table style={{ overflowX: 'auto',height:'100%' }} className="w-full border border-gray-400">
         <thead>
           <tr className="bg-gray-200">
             <th className="border px-4 py-2">NAME</th>

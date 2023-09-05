@@ -15,9 +15,11 @@
     width: 50%;
     height: 50%;
     background-color: rgb(66, 64, 64);
+    min-width: 300px;
 }
 .form input{
    max-width:90%;
+   border-radius: 2cm;
 }
 .form button{
     margin-left: 40px;

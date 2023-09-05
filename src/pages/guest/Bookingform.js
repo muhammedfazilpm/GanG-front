@@ -89,8 +89,8 @@ const Bookingform = () => {
 
   return (
     <div
-      style={{ display: "flex", minHeight: "85vh", marginTop: "0",background:'wheat'}}
-      className="p-8"
+      style={{ display: "flex", minHeight: "85vh",maxHeight:'300px', marginTop: "0",background:'wheat'}}
+      className="p-0"
     >
       <div
         style={{
@@ -102,9 +102,12 @@ const Bookingform = () => {
           paddingTop: "10%",
           marginTop: "0",
           minHeight: "85vh",
+          minWidth:'300px',
+          maxHeight:'300px'
+        
         }}
       >
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form style={{maxHeight:'300px'}} onSubmit={handleSubmit} className="space-y-4">
           <div>
             {errors.name&&!formData.name&&<p className="text-white">{errors.name}</p>}
             <label className="block mb-1 font-medium" htmlFor="name">

@@ -30,7 +30,8 @@
 .Guidelogincard{
     
     width:40%;
-    background-color: #0a2351c8;
+    min-width: 300px;
+    background-color: #0a2351e9;
     padding-top: 4%;
     height: 70%;
     text-align: center;
@@ -40,6 +41,7 @@
 }
 .Guidelogincard h3{
     text-align: center;
+    margin-bottom: 100px;
     padding-top: 10px;
     color:rgb(249, 249, 249);
     font-weight: bolder;
@@ -53,9 +55,13 @@
     width: 90%;
     padding: 0.2cm;
     height: 30px;
+    margin-bottom: 10%;
+    margin-top: 5%;
+    border-radius: 2cm;
 }
 .Guidelogincard button{
  background-color: #e8114a;
+ margin-bottom: 8%;
 }
 .Guidelogintags{
     display: flex;

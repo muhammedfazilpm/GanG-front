@@ -23,6 +23,7 @@ export default function Editprofile() {
   const [inputValue, setInputValue] = useState("");
   const [inputValue2, setInputValue2] = useState("");
   const [inputValue3,setInputValue3]=useState("")
+  const [error,setError]=useState(false)
   
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
@@ -44,7 +45,9 @@ export default function Editprofile() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("entry");
+    if(selectedImage===null){
+      setError(true)
+    }
     try {
       dispatch(showloading())
       const formData = new FormData();
@@ -68,7 +71,7 @@ export default function Editprofile() {
       }
     } catch (error) {
       dispatch(hideloading())
-      toast.error("check the uploaded image");
+      toast.error("upload a image");
       console.log(error);
     }
   };
@@ -149,6 +152,7 @@ export default function Editprofile() {
             />
           </div>
           <div class="mb-4">
+            {error&&<p>select a imge</p>}
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
               for="profilePicture"

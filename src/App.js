@@ -265,6 +265,14 @@ function App() {
             </Protectedguestroute>
           }
         />
+                 <Route
+          path="/guest/chat"
+          element={                             
+            <Protectedguestroute>
+              <Chating/>
+            </Protectedguestroute>
+          }
+        />
 
         {/* admin routes */}
         <Route
@@ -372,14 +380,6 @@ function App() {
           element={
             <Protectedadminroute>
               <Guestbanner/>
-            </Protectedadminroute>
-          }
-        />
-        <Route
-          path="/guest/chat"
-          element={
-            <Protectedadminroute>
-              <Chating/>
             </Protectedadminroute>
           }
         />

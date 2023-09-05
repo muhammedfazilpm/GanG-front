@@ -35,7 +35,6 @@ export default function Navbar() {
               <a href="/orders" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Orders</a>
               <a href="/dashboard" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
 
-              <a href="/guide/chat" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Chat</a>
 
               <a onClick={handleLogout} href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
             </div>
@@ -63,7 +62,6 @@ export default function Navbar() {
             <a href="/orders" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Orders</a>
             <a href="/dashboard" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
 
-            <a href="/guide/chat" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Chatings</a>
             <a onClick={handleLogout} href="#" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Logout</a>
           </div>
         </div>

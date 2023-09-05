@@ -19,12 +19,20 @@
     width: 50%;
     height: 50%;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.394);
+    background-color: rgba(0, 0, 0, 0.511);
+    min-width: 300px;
    
 }
 .resetform p{
     color: aliceblue;
     margin-top: 1%;
+}
+.resetform input{
+    border-radius: 2cm;
+    color: black;
+}
+.resetform input::placeholder{
+    color: black;
 }
 .resetform button{
     background-color: black;
