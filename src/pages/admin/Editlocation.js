@@ -31,7 +31,7 @@ export default function Editlocation() {
     event.preventDefault();
     try {
       dispatch(showloading())
-      const response = await axios.post("/api/admin/editlocation", {
+      const response = await axios.post("http://globalone.shop/api/admin/editlocation", {
         id,
         state,
         districts,

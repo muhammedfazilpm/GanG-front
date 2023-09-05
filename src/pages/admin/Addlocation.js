@@ -17,7 +17,7 @@ export default function Addlocation() {
 
     try {
       dispatch(showloading())
-      const response = await axios.post("/api/admin/addlocation", {
+      const response = await axios.post("http://globalone.shop/api/admin/addlocation", {
         state,
         district,
       });

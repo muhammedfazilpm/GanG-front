@@ -14,7 +14,7 @@ export default function Registerguest() {
   const onFinish = async (values) => {
     try {
       dispatch(showloading())
-      const response = await axios.post("/api/guest/register", values);
+      const response = await axios.post("http://globalone.shop/api/guest/register", values);
       dispatch(hideloading())
       if (response.data.success) {
         toast.success(response.data.message);

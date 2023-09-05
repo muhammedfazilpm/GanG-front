@@ -17,7 +17,7 @@ export default function Guidelist() {
   const blockUser = async (id) => {
     try {
       dispatch(showloading())
-      const response = await axios.post("/api/admin/blockUser", { id });
+      const response = await axios.post("http://globalone.shop/api/admin/blockUser", { id });
    dispatch(hideloading())
       if (response.data.success) {
         toast.success(response.data.message);

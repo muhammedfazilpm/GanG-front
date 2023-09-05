@@ -13,7 +13,7 @@ export default function Forgetguest() {
   const onFinish = async (values) => {
     try {
       dispatch(showloading())
-      const response = await axios.post("/api/guest/reset", values);
+      const response = await axios.post("http://globalone.shop/api/guest/reset", values);
 
       if (response.data.success) {
         dispatch(hideloading())

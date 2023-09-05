@@ -15,7 +15,7 @@ export default function Otp() {
     try {
       dispatch(showloading())
      
-      const response=await axios.post('/api/guide/otp',values)
+      const response=await axios.post('http://globalone.shop/api/guide/otp',values)
       
       if(response.data.success){
         dispatch(hideloading())

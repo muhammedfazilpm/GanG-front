@@ -9,7 +9,7 @@ import axios from "axios";
 // import './guidechat.css'
 
 // import { guideRequest } from '../../axios'
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("http://globalone.shop");
 
 
 export default function Guidechat() {
@@ -43,7 +43,7 @@ export default function Guidechat() {
 
     }
    
-   const response= await axios.post('/api/guide/chathistory',{data})
+   const response= await axios.post('http://globalone.shop/api/guide/chathistory',{data})
    if (response.data.success) {
     const chat=response.data.chat
   for(let i=0;i<chat.length;i++){

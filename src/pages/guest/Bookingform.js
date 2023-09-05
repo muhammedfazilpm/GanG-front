@@ -21,7 +21,7 @@ const Bookingform = () => {
   const getLocation = async () => {
     try {
       dispatch(showloading())
-      const response = await axios.post("/api/guest/getlocation");
+      const response = await axios.post("http://globalone.shop/api/guest/getlocation");
       if (response) {
          dispatch(hideloading())
         setLocation(response.data.data);

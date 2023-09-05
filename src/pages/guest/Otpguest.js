@@ -9,7 +9,7 @@ export default function Otpguest() {
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
-      const response = await axios.post("/api/guest/otp", values);
+      const response = await axios.post("http://globalone.shop/api/guest/otp", values);
 
       if (response.data.success) {
         toast.success(response.data.message);

@@ -22,7 +22,7 @@ const dispatch=useDispatch()
         try {
           dispatch(showloading())
             const response = await axios.post(
-                "/api/guide/getorders",
+                "http://globalone.shop/api/guide/getorders",
                 {},
                 {
                   headers: {

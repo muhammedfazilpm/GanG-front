@@ -17,7 +17,7 @@ export default function Login() {
     
     try {
       dispatch(showloading())
-const response=await axios.post("/api/guide/login",values)
+const response=await axios.post("http://globalone.shop/api/guide/login",values)
      if(response.data.success){
       dispatch(hideloading())
       toast.success(response.data.message)

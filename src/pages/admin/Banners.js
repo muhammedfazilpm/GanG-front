@@ -17,7 +17,7 @@ export default function Banners() {
         try {
             dispatch(showloading())
 
-            const response=await axios.get('/api/admin/getbanner')
+            const response=await axios.get('http://globalone.shop/api/admin/getbanner')
             dispatch(hideloading())
             if(response.data.success){
                 setGuidebanner(response.data.data)

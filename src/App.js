@@ -81,7 +81,7 @@ function App() {
   };
   const getGuide = async () => {
     try {
-      const response = await axios.get("/api/admin/getGuide");
+      const response = await axios.get("http://globalone.shop/api/admin/getGuide");
       setGuide(response.data.data);
     } catch (error) {}
   };

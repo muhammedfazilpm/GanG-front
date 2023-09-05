@@ -20,7 +20,7 @@ export default function Location() {
   const getDetails = async () => {
     try {
       dispatch(showloading())
-      const response = await axios.post("/api/admin/getlocation");
+      const response = await axios.post("http://globalone.shop/api/admin/getlocation");
 dispatch(hideloading())
       setData(response.data.data);
     } catch (error) {

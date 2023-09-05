@@ -12,7 +12,7 @@ export default function Listguideinguest() {
   const navigate = useNavigate();
   const Viewaguide = async (data) => {
     dispatch(showloading())
-    const response = await axios.post("/api/guest/sendDetails", { data });
+    const response = await axios.post("http://globalone.shop/api/guest/sendDetails", { data });
     dispatch(hideloading())
     if (response.data.success) {
       navigate("/guest/guideView", { state: response.data });
@@ -43,7 +43,7 @@ if(selectedguide.length==0){
     try {
       dispatch(showloading())
       const response = await axios.post(
-        "/api/guest/bookorder",
+        "http://globalone.shop/api/guest/bookorder",
         { data: data, formData: formData },
         {
           headers: {
@@ -105,7 +105,7 @@ PaymentUpdate(payment,order)
 
   const PaymentUpdate=async(payment,order)=>{
     try {
-     const response= await axios.post('/api/guest/paymentUpdate',{payment,order})
+     const response= await axios.post('http://globalone.shop/api/guest/paymentUpdate',{payment,order})
      if(response.data.success){
       toast.success(response.data.message)
       localStorage.removeItem("formData");

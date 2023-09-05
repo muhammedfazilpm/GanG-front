@@ -18,7 +18,7 @@ export default function Orderguide() {
         
        try {
         dispatch(showloading())
-        const response=await axios.post("api/guide/sendcomplete",{id})
+        const response=await axios.post("http://globalone.shop/api/guide/sendcomplete",{id})
         if(response.data.success){
           dispatch(hideloading())
             toast.success(response.data.message)
@@ -39,7 +39,7 @@ export default function Orderguide() {
    const getOrder=async ()=>{
     dispatch(showloading())
     guideRequest({
-        url:"/api/guide/getOrder",
+        url:"http://globalone.shop/api/guide/getOrder",
         method:'post'
 
     }).then((response)=>{

@@ -55,7 +55,7 @@ export default function Editprofile() {
       formData.append("phone", inputValue2);
       formData.append("amount", inputValue3);
       formData.append("image", selectedImage);
-      const response = await axios.post("/api/guide/editprofile", formData, {
+      const response = await axios.post("http://globalone.shop/api/guide/editprofile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + localStorage.getItem("token"),

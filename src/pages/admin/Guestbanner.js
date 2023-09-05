@@ -48,7 +48,7 @@ export default function Guestbanner() {
        
        
       
-       const response = await axios.post("/api/admin/addguestbanner", formData, {
+       const response = await axios.post("http://globalone.shop/api/admin/addguestbanner", formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
       Authorization: "Bearer " + localStorage.getItem("admintoken")
