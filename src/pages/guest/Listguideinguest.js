@@ -5,7 +5,6 @@ import GuideContext from "../context";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { loadScript } from 'https://checkout.razorpay.com/v1/checkout.js';
 import { useDispatch } from "react-redux";
 import { hideloading, showloading } from "../../redux/alertSlice";
 export default function Listguideinguest() {
@@ -19,6 +18,8 @@ export default function Listguideinguest() {
       navigate("/guest/guideView", { state: response.data });
     }
   };
+  let errors=false
+  
   const localdata2 = localStorage.getItem("formData");
   const formData = JSON.parse(localdata2);
   const guide = useContext(GuideContext);
@@ -32,7 +33,11 @@ export default function Listguideinguest() {
       item.isAdminverified === true &&
       item.isVerfied === true
   );
+if(selectedguide.length==0){
+  errors=true
+  
 
+}
   const sendOrder = async (data) => {
 
     try {
@@ -120,6 +125,7 @@ PaymentUpdate(payment,order)
   return (
     <div>
       <Navbarguest />
+      {errors&&<p className="w-full text-center text-red-500">There is no guide present In the selected location</p>}
      
       <div className="flex justify-center">
         <div className="w-full lg:w-2/3 xl:w-1/2">
