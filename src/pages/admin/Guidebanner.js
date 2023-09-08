@@ -42,7 +42,7 @@ export default function Guidebanner() {
      
      
     dispatch(showloading())
-     const response = await axios.post("http://globalone.shop/api/admin/addbanner", formData, {
+     const response = await axios.post("https://globalone.shop/api/admin/addbanner", formData, {
   headers: {
     'Content-Type': 'multipart/form-data',
     Authorization: "Bearer " + localStorage.getItem("admintoken")

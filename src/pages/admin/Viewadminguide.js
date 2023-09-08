@@ -23,7 +23,7 @@ export default function Viewadminguide() {
   const getdetails = async () => {
     try {
       dispatch(showloading())
-      const response = await axios.post("http://globalone.shop/api/admin/getdetails", { id: id });
+      const response = await axios.post("https://globalone.shop/api/admin/getdetails", { id: id });
       dispatch(hideloading())
       setDetails(response.data.data);
       setReview(response.data.reviews)
@@ -37,7 +37,7 @@ export default function Viewadminguide() {
   const changestatus = async () => {
     try {
       dispatch(showloading())
-      const response = await axios.post("http://globalone.shop/api/admin/verifyguide", {
+      const response = await axios.post("https://globalone.shop/api/admin/verifyguide", {
         id: details.guidid,
       });
       dispatch(hideloading())

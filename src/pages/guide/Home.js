@@ -19,7 +19,7 @@ export default function Home() {
 const getData=async()=>{
   try {
     dispatch(showloading())
-    const response=await axios.post('http://globalone.shop/api/guide/getUser',{},
+    const response=await axios.post('https://globalone.shop/api/guide/getUser',{},
     {
       headers:{
           Authorization:'Bearer '+ localStorage.getItem('token') 

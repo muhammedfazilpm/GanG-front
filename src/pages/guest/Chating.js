@@ -11,7 +11,7 @@ import axios from "axios";
 // import './Chating.css'
 
 
-const socket = io.connect("http://globalone.shop");
+const socket = io.connect("https://globalone.shop");
 
 export default function Chating() {
   const Navigate=useNavigate()
@@ -46,7 +46,7 @@ export default function Chating() {
         id,
         userid
       }
-      const response=await axios.post('http://globalone.shop/api/guest/getchathistory',{data})
+      const response=await axios.post('https://globalone.shop/api/guest/getchathistory',{data})
       if (response.data.success) {
         const chat=response.data.chat
       for(let i=0;i<chat.length;i++){

@@ -13,7 +13,7 @@ export default function Guestlist() {
       const getGuest=async()=>{
         try {
           dispatch(showloading())
-            const response= await axios.get('http://globalone.shop/api/admin/getGuest')
+            const response= await axios.get('https://globalone.shop/api/admin/getGuest')
            dispatch(hideloading())
             if(response.data.success){
                 
@@ -28,7 +28,7 @@ export default function Guestlist() {
         const blockGuest=async(id)=>{
           try {
            dispatch(showloading())
-            const response=await axios.post('http://globalone.shop/api/admin/blockGuest',{id})
+            const response=await axios.post('https://globalone.shop/api/admin/blockGuest',{id})
            dispatch(hideloading())
             if(response.data.success){
               console.log("hfisafi")

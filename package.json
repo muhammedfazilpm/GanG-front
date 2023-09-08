@@ -42,8 +42,6 @@
     "eject": "react-scripts eject",
     "start:react": "react-scripts start"
   },
-  "proxy": "https://globalone.shop",
-
 
   "eslintConfig": {
     "extends": [
@@ -63,8 +61,10 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "https://globalone.shop/",
   "devDependencies": {
     "dist-css": "^0.2.0",
     "tailwindcss": "^3.3.3"
   }
 }
+

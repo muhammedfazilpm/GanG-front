@@ -14,7 +14,7 @@ export default function Login() {
   const onFinish = async (values) => {
     try {
       dispatch(showloading())
-      const response = await axios.post("http://globalone.shop/api/guest/login", values);
+      const response = await axios.post("https://globalone.shop/api/guest/login", values);
       dispatch(hideloading())
       if (response.data.success) {
         toast.success(response.data.message);

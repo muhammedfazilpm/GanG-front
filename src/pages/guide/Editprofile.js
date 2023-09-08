@@ -55,7 +55,7 @@ export default function Editprofile() {
       formData.append("phone", inputValue2);
       formData.append("amount", inputValue3);
       formData.append("image", selectedImage);
-      const response = await axios.post("http://globalone.shop/api/guide/editprofile", formData, {
+      const response = await axios.post("https://globalone.shop/api/guide/editprofile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -71,8 +71,9 @@ export default function Editprofile() {
       }
     } catch (error) {
       dispatch(hideloading())
-      toast.error("upload a image");
       console.log(error);
+
+      toast.error("upload a image");
     }
   };
   const getUser=async()=>{
@@ -152,7 +153,7 @@ export default function Editprofile() {
             />
           </div>
           <div class="mb-4">
-            {error&&<p>select a imge</p>}
+            {error&&<p className="text-red-500">image not selected</p>}
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
               for="profilePicture"
