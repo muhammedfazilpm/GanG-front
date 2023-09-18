@@ -15,7 +15,7 @@ export default function Otp() {
     try {
       dispatch(showloading())
      
-      const response=await axios.post('https://globalone.shop/api/guide/otp',values)
+      const response=await axios.post('http://localhost:5000/api/guide/otp',values)
       
       if(response.data.success){
         dispatch(hideloading())
@@ -41,7 +41,7 @@ export default function Otp() {
     
     <div className='resetcards'>
       
-      <div className='resetform'>
+      <div style={{display:'flex',justifyContent:'center'}} className='resetform'>
       
     <Form layout='vertical' onFinish={onFinish}>
     <p>Enter your otp here</p>

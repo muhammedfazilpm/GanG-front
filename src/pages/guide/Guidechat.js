@@ -9,7 +9,7 @@ import axios from "axios";
 // import './guidechat.css'
 
 // import { guideRequest } from '../../axios'
-const socket = io.connect("https://globalone.shop");
+const socket = io.connect("http://localhost:5000");
 
 
 export default function Guidechat() {
@@ -37,13 +37,14 @@ export default function Guidechat() {
   };
 
   const getChatHistory=async()=>{
+    
     const data={
       id,
       userid
 
     }
    
-   const response= await axios.post('https://globalone.shop/api/guide/chathistory',{data})
+   const response= await axios.post('http://localhost:5000/api/guide/chathistory',{data})
    if (response.data.success) {
     const chat=response.data.chat
   for(let i=0;i<chat.length;i++){
@@ -118,7 +119,7 @@ useEffect(() => {
     </div>
   
     {/* Chat Messages */}
-    <div className="flex-grow w-full overflow-y-auto">
+    <div className="flex-grow w-full overflow-y-auto h-screen ">
     <div id="messages" className="flex flex-col w-full space-y-4 p-3 scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
       {messagelist.map((items) => {
         if (items.message) {
@@ -164,7 +165,7 @@ useEffect(() => {
     </div>
   
     {/* Message Input */}
-    <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+    <div className="border-t-2 w-full border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
       <div className="relative flex">
         <span className="absolute inset-y-0 flex items-center"></span>
         <input
@@ -176,7 +177,7 @@ useEffect(() => {
           placeholder="write here"
           className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"
         />
-        <div className="absolute right-0 items-center inset-y-0 flex">
+        <div className="absolute  right-0 items-center inset-y-0 flex">
           <button
             type="button"
             onClick={sendmessage}

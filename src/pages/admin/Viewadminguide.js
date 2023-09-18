@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import Rating from "../guest/Rating";
 import { useDispatch } from "react-redux";
 import { hideloading, showloading } from "../../redux/alertSlice";
+import Swal from 'sweetalert2'
 
 export default function Viewadminguide() {
   const dispatch=useDispatch()
@@ -21,9 +22,10 @@ export default function Viewadminguide() {
   const guides = guide.state;
   const id = guides._id;
   const getdetails = async () => {
+    
     try {
       dispatch(showloading())
-      const response = await axios.post("https://globalone.shop/api/admin/getdetails", { id: id });
+      const response = await axios.post("http://localhost:5000/api/admin/getdetails", { id: id });
       dispatch(hideloading())
       setDetails(response.data.data);
       setReview(response.data.reviews)
@@ -35,23 +37,38 @@ export default function Viewadminguide() {
   };
 
   const changestatus = async () => {
-    try {
-      dispatch(showloading())
-      const response = await axios.post("https://globalone.shop/api/admin/verifyguide", {
-        id: details.guidid,
-      });
-      dispatch(hideloading())
-      if (response.data.success) {
-        toast.success(response.data.message);
-        navigate("/admin/guide");
-        window.location.reload()
-      } else {
-        toast.error(response.data.message);
+    const result = await Swal.fire({
+      title: 'Verify Confirmation',
+      text: 'Are you sure you want Verify this guide?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Block',
+      cancelButtonText: 'Cancel',
+    });
+    if(result.isConfirmed){
+      try {
+        dispatch(showloading())
+        const response = await axios.post("http://localhost:5000/api/admin/verifyguide", {
+          id: details.guidid,
+        });
+        dispatch(hideloading())
+        if (response.data.success) {
+          toast.success(response.data.message);
+          navigate("/admin/guide");
+          window.location.reload()
+        } else {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        dispatch(hideloading())
+        toast.error("something went wrong");
       }
-    } catch (error) {
-      dispatch(hideloading())
-      toast.error("something went wrong");
+
     }
+
+   
   };
   useEffect(() => {
     getdetails();
@@ -118,7 +135,7 @@ export default function Viewadminguide() {
         </div>
       </div>
   </div>
-  <div className="col-span-12 rounded-lg border border-gray-400 bg-gray-200 p-1 sm:col-span-7">
+  {review.length!=0?  <div className="col-span-12 rounded-lg border border-gray-400 bg-gray-200 p-1 sm:col-span-7">
   <h2 className="text-xl font-semibold text-slate-800 mb-4">Reviews</h2>
   <div className="grid gap-4">
     {review.map((item) => (
@@ -141,7 +158,8 @@ export default function Viewadminguide() {
       </div>
     ))}
   </div>
-</div>
+</div>:''}
+
   </div>
 </div>
 

@@ -6,13 +6,14 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import Swal from 'sweetalert2'
 import { hideloading, showloading } from "../../redux/alertSlice";
 export default function Listguideinguest() {
   const dispatch=useDispatch()
   const navigate = useNavigate();
   const Viewaguide = async (data) => {
     dispatch(showloading())
-    const response = await axios.post("https://globalone.shop/api/guest/sendDetails", { data });
+    const response = await axios.post("http://localhost:5000/api/guest/sendDetails", { data });
     dispatch(hideloading())
     if (response.data.success) {
       navigate("/guest/guideView", { state: response.data });
@@ -38,87 +39,104 @@ if(selectedguide.length==0){
   
 
 }
+
+
   const sendOrder = async (data) => {
-
-    try {
-      dispatch(showloading())
-      const response = await axios.post(
-        "https://globalone.shop/api/guest/bookorder",
-        { data: data, formData: formData },
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("guesttoken"),
-          },
+    const result = await Swal.fire({
+      title: 'Book Confirmation',
+      text: 'Are you sure you want to Book this guide?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'BOOK',
+      cancelButtonText: 'Cancel',
+    });
+    if(result.isConfirmed){
+      try {
+        dispatch(showloading())
+        const response = await axios.post(
+          "http://localhost:5000/api/guest/bookorder",
+          { data: data, formData: formData },
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("guesttoken"),
+            },
+          }
+        );
+        dispatch(hideloading())
+        if (response.data.success) {
+          toast.success(response.data.message);
+          razorpayPayment(response.data.data)
+          
+         
+          
+        } else {
+          toast.error(response.data.message);
         }
-      );
+      } catch (error) {
       dispatch(hideloading())
-      if (response.data.success) {
-        toast.success(response.data.message);
-        razorpayPayment(response.data.data)
-        
-       
-        
-      } else {
-        toast.error(response.data.message);
+        toast.error("something went wrong");
       }
-    } catch (error) {
-    dispatch(hideloading())
-      toast.error("something went wrong");
-    }
-  };
-
-  function razorpayPayment(order) {
-     console.log("amount",order.advance)
-    var options = {
-        "key": "rzp_test_34XnG5Q61yIlEw",
-        "amount": order.advance*100,
-        "currency": "INR",
-        "name": "GanG guide booking",
-        "description": "pay the amount to confirm booking",
-        "image": "/user/images/online-shopping.png",
-        "order_id": order.id,
-        // "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
-        "handler": function (response) {
-            verifyPayment(response, order)
-        },
-        "prefill": {
-            "name": "Gaurav Kumar", //your customer's name
-            "email": "gaurav.kumar@example.com",
-            "contact": "9000090000"
-        },
-        "notes": {
-            "address": "Razorpay Corporate Office"
-        },
-        "theme": {
-            "color": "#3399cc"
-        }
-
     };
-    
-    var rzp1 = new window.Razorpay(options);
-    rzp1.open();
-}
-const verifyPayment = (payment, order) => {
-
-PaymentUpdate(payment,order)
-}
-
-  const PaymentUpdate=async(payment,order)=>{
-    try {
-     const response= await axios.post('https://globalone.shop/api/guest/paymentUpdate',{payment,order})
-     if(response.data.success){
-      toast.success(response.data.message)
-      localStorage.removeItem("formData");
-      navigate('/guest/orders')
+  
+    function razorpayPayment(order) {
+       console.log("amount",order.advance)
+      var options = {
+          "key": "rzp_test_34XnG5Q61yIlEw",
+          "amount": order.advance*100,
+          "currency": "INR",
+          "name": "GanG guide booking",
+          "description": "pay the amount to confirm booking",
+          "image": "/user/images/online-shopping.png",
+          "order_id": order.id,
+          // "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+          "handler": function (response) {
+              verifyPayment(response, order)
+          },
+          "prefill": {
+              "name": "Gaurav Kumar", //your customer's name
+              "email": "gaurav.kumar@example.com",
+              "contact": "9000090000"
+          },
+          "notes": {
+              "address": "Razorpay Corporate Office"
+          },
+          "theme": {
+              "color": "#3399cc"
+          }
+  
+      };
       
-     }else{
-         toast.error(response.data.message)
-     }
-      
-    } catch (error) {
-      toast.error('something went wrong')
+      var rzp1 = new window.Razorpay(options);
+      rzp1.open();
+  }
+  const verifyPayment = (payment, order) => {
+  
+  PaymentUpdate(payment,order)
+  }
+  
+    const PaymentUpdate=async(payment,order)=>{
+      try {
+       const response= await axios.post('http://localhost:5000/api/guest/paymentUpdate',{payment,order})
+       if(response.data.success){
+        toast.success(response.data.message)
+        localStorage.removeItem("formData");
+        navigate('/guest/orders')
+        
+       }else{
+           toast.error(response.data.message)
+       }
+        
+      } catch (error) {
+        toast.error('something went wrong')
+      }
+  
+
     }
+    
 
+    
   }
 
 

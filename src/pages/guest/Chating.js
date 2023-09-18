@@ -11,7 +11,7 @@ import axios from "axios";
 // import './Chating.css'
 
 
-const socket = io.connect("https://globalone.shop");
+const socket = io.connect("http://localhost:5000");
 
 export default function Chating() {
   const Navigate=useNavigate()
@@ -26,7 +26,8 @@ export default function Chating() {
 
 
   const sendmessage = async () => {
-    if (currentmessage !== 0) {
+    if (currentmessage.length  !== 0) {
+      console.log("blanck",currentmessage)
       const messageData = {
         room: id,
         author: userid,
@@ -46,7 +47,7 @@ export default function Chating() {
         id,
         userid
       }
-      const response=await axios.post('https://globalone.shop/api/guest/getchathistory',{data})
+      const response=await axios.post('http://localhost:5000/api/guest/getchathistory',{data})
       if (response.data.success) {
         const chat=response.data.chat
       for(let i=0;i<chat.length;i++){
@@ -100,7 +101,6 @@ useEffect(() => {
   return (
     <div>
       <Navbarguest/>
-      <div className="flex-1 p-10  sm:p-8 border-4 justify-between flex flex-col">
     {/* Chat Header */}
     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200 w-full">
       <div className="relative flex items-center space-x-4 w-full">
@@ -124,7 +124,7 @@ useEffect(() => {
         </div>
       </div>
     </div>
-        <div className="relative">
+        <div className="relative ">
           <span className="absolute text-green-500 right-0 bottom-0">
             <svg width="20" height="20">
               
@@ -132,7 +132,7 @@ useEffect(() => {
           </span>
           {/* Add partner's profile image here */}
         </div>
-        <div className="flex flex-col leading-tight">
+        <div className="flex flex-col  leading-tight">
           <div className="text-2xl mt-1 flex items-center">
             {/* Display partner's name */}
           </div>
@@ -142,8 +142,8 @@ useEffect(() => {
     </div>
   
     {/* Chat Messages */}
-    <div className="flex-grow w-full overflow-y-auto">
-  <div id="messages" className="flex flex-col w-full p-3 scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch border rounded-lg">
+    <div className="flex-grow w-full  overflow-y-auto ">
+  <div id="messages" className="flex flex-col w-full p-3 scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch border rounded-lg min-h-screen">
     {messagelist.map((items) => {
       if (items.message) {
         const timeAgo = formatDistanceToNow(new Date(items?.time), {
@@ -167,7 +167,7 @@ useEffect(() => {
         });
         return (
           <div className="chat-message w-full flex justify-end mb-4" key={items.id}>
-            <div className="flex flex-col space-y-2 text-xs max-w-md mx-2 items-end">
+            <div className="flex flex-col space-y-2 text-xs max-w-md mx-2 items-end ">
               <div>
                 <span className="px-4 py-2 my-4 rounded-lg inline-block rounded-tr-none bg-blue-600 text-white">
                   {items.currentmessage}
@@ -216,7 +216,6 @@ useEffect(() => {
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   );

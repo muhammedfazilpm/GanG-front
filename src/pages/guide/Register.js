@@ -15,15 +15,17 @@ export default function Register() {
   const onFinish= async(values)=>{
    try {
    dispatch(showloading())
-    const response=await axios.post("https://globalone.shop/api/guide/register",values)
+    const response=await axios.post("http://localhost:5000/api/guide/register",values)
+    console.log(response)
     if(response.data.success){
       dispatch(hideloading())
         toast.success(response.data.message)
             navigate("/otp")
     }
     else{
+      toast.error(response.data.message)
+
       dispatch(hideloading())
-toast.error(response.data.message)
     }
     
    } catch (error) {

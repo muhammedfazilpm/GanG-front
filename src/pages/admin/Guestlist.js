@@ -4,7 +4,8 @@ import { useEffect,useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { hideloading, showloading } from '../../redux/alertSlice'
-import Adminfooter from './Adminfooter'
+import Swal from 'sweetalert2'
+
 
 
 export default function Guestlist() {
@@ -13,7 +14,7 @@ export default function Guestlist() {
       const getGuest=async()=>{
         try {
           dispatch(showloading())
-            const response= await axios.get('https://globalone.shop/api/admin/getGuest')
+            const response= await axios.get('http://localhost:5000/api/admin/getGuest')
            dispatch(hideloading())
             if(response.data.success){
                 
@@ -26,19 +27,32 @@ export default function Guestlist() {
         }
 
         const blockGuest=async(id)=>{
-          try {
-           dispatch(showloading())
-            const response=await axios.post('https://globalone.shop/api/admin/blockGuest',{id})
-           dispatch(hideloading())
-            if(response.data.success){
-              console.log("hfisafi")
-            window.location.reload();
-              
-            }
-          } catch (error) {
-            dispatch(hideloading())
-            
+          const result = await Swal.fire({
+            title: 'Block Confirmation',
+            text: 'Are you sure you want to Blcok this guest?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Block',
+            cancelButtonText: 'Cancel',
+          });
+          if(result.isConfirmed){
+            try {
+              dispatch(showloading())
+               const response=await axios.post('http://localhost:5000/api/admin/blockGuest',{id})
+              dispatch(hideloading())
+               if(response.data.success){
+               window.location.reload();
+                 
+               }
+             } catch (error) {
+               dispatch(hideloading())
+               
+             }
+
           }
+          
         }
 
       

@@ -1,13 +1,25 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import {useLocation} from "react-router-dom"
 import gangLogo from "./assets/gang logo.PNG";
 import "tailwindcss/tailwind.css";
 
 export default function Navbaradmin() {
+  const location=useLocation()
+  const [activeLink, setActiveLink] = useState("")
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    setActiveLink(location.pathname);
+  }, [location.pathname]);
+
   const handleLogout = () => {
     localStorage.removeItem("admintoken");
     window.location.href = "/admin/login";
+  };
+  const getLinkClassName = (path) => {
+    return `text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium ${
+      activeLink === path ? "bg-black" : ""
+    }`;
   };
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -31,39 +43,34 @@ export default function Navbaradmin() {
               <div className="ml-10 flex items-baseline space-x-4">
                 <a
                   href="/admin"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  className={getLinkClassName("/admin")}                >
                   Dashboard
                 </a>
                 <a
                   href="/admin/location"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  className={getLinkClassName("/admin/location")}                >
                   Location
                 </a>
                 <a
                   href="/admin/guide"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  className={getLinkClassName("/admin/guide")}                >
+                
                   Guide
                 </a>
                 
                 <a
                   href="/admin/guest"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  className={getLinkClassName("/admin/guest")}                >
                   Guest
                 </a>
                 <a
                   href="/admin/orders"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  className={getLinkClassName("/admin/orders")}                >
                   Orders
                 </a>
                 <a
                   href="/admin/banners"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
+                  className={getLinkClassName("/admin/banners")}                >
                   Banners
                 </a>
                 <a
@@ -111,26 +118,28 @@ export default function Navbaradmin() {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <a
                 href="/admin"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
+                className={getLinkClassName("/admin")}                >
                 Dashboard
               </a>
               <a
                 href="/admin/location"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
+                className={getLinkClassName("/admin/location")}                >
+
                 Location
               </a>
               <a
+                  href="/admin/guest"
+                  className={getLinkClassName("/admin/guest")}                >
+                  Guest
+                </a>
+              <a
                 href="/admin/guide"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
+                className={getLinkClassName("/admin/guide")}                >
                 Guide
               </a>
               <a
-                href="/admin/guide"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
+                href="/admin/banners"
+                className={getLinkClassName("/admin/banners")}                >
                 Banners
               </a>
               <a

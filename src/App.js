@@ -44,12 +44,14 @@ import Publicguestroute from "./pages/guest/component/Publicguestroute";
 import Forgetguest from "./pages/guest/Forgetguest";
 import Resetguest from "./pages/guest/Resetguest";
 
+
 // guest after login
 import Bookingguest from "./pages/guest/Bookingguest";
 import Listguideinguest from "./pages/guest/Listguideinguest";
 import Guideviewguest from "./pages/guest/Guideviewguest";
 import Ordersguest from "./pages/guest/Ordersguest";
 import Review from "./pages/guest/Review";
+import Chatlists from "./pages/guest/Chatlists";
 
 // admin pages
 import Loginadmin from "./pages/admin/Loginamin";
@@ -81,13 +83,12 @@ function App() {
   };
   const getGuide = async () => {
     try {
-      const response = await axios.get("https://globalone.shop/api/admin/getGuide");
+      const response = await axios.get("http://localhost:5000/api/admin/getGuide");
       setGuide(response.data.data);
     } catch (error) {}
   };
 
   useEffect(() => {
-    console.log("guide state", guide);
   }, [guide]);
 
   useEffect(() => {
@@ -249,6 +250,14 @@ function App() {
           }
         />
         <Route path="/guest/guideView" element={<Guideviewguest />} />
+        <Route
+          path="/guest/chatlist"
+          element={
+            <Protectedguestroute>
+              <Chatlists/>
+            </Protectedguestroute>
+          }
+        />
         <Route
           path="guest/orders"
           element={

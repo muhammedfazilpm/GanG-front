@@ -21,7 +21,7 @@ export default function Completeform() {
    
     try {
       dispatch(showloading())
-      const response=await axios.post('https://globalone.shop/api/guide/checkcode',{otp,data})
+      const response=await axios.post('http://localhost:5000/api/guide/checkcode',{otp,data})
       if(response.data.success){
         dispatch(hideloading())
         toast.success(response.data.message)

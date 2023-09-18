@@ -18,7 +18,7 @@ export default function Orderguide() {
         
        try {
         dispatch(showloading())
-        const response=await axios.post("https://globalone.shop/api/guide/sendcomplete",{id})
+        const response=await axios.post("http://localhost:5000/api/guide/sendcomplete",{id})
         if(response.data.success){
           dispatch(hideloading())
             toast.success(response.data.message)
@@ -39,7 +39,7 @@ export default function Orderguide() {
    const getOrder=async ()=>{
     dispatch(showloading())
     guideRequest({
-        url:"https://globalone.shop/api/guide/getOrder",
+        url:"http://localhost:5000/api/guide/getOrder",
         method:'post'
 
     }).then((response)=>{
@@ -62,7 +62,12 @@ export default function Orderguide() {
     })
    
    }
-   const order=orders.filter((item)=>item.paymentstatus!=="pending")
+   const order2=orders.filter((item)=>item.paymentstatus!=="pending")
+   const order=order2.sort((a,b)=>{
+    const dateA=new Date(a.dateofbook)
+    const dateB=new Date(b.dateofbook)
+    return dateA-dateB
+   })
     useEffect(()=>{
     getOrder()
     },[])

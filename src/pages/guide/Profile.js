@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import Rating from "../guest/Rating";
 import { useDispatch } from "react-redux";
 import { hideloading, showloading } from "../../redux/alertSlice";
-import Guidefooter from "./Guidefooter";
 
 
 export default function Profile() {
@@ -19,7 +18,7 @@ export default function Profile() {
     try {
       dispatch(showloading())
       const response = await axios.post(
-        "https://globalone.shop/api/guide/getProfile",
+        "http://localhost:5000/api/guide/getProfile",
         {},
         {
           headers: {
@@ -77,9 +76,10 @@ export default function Profile() {
             <p className="text-white">{Details?.description}</p>
           </div>
           <div className="mt-6">
-            <h1 className="text-white text-center">
+            {Details?<h1 className="text-white text-center">
               {Details?.location} RS {Details?.amount}
-            </h1>
+            </h1>:""}
+            
 
             {Details == null && (
               <Link to="/adDetails">
@@ -96,7 +96,8 @@ export default function Profile() {
                 </Button>
               </Link>
             )}
-            <Link to="/editprofile">
+            {Details!=null&&(
+              <Link to="/editprofile">
               <Button
                 type="primary"
                 style={{ backgroundColor: "green", marginLeft: "10px" }}
@@ -105,53 +106,62 @@ export default function Profile() {
                 EDIT
               </Button>
             </Link>
+
+            )}
+            
           </div>
         </div>
         <a className="text-blue-500 hover:underline text-center block">
           ID DETAILS
         </a>
-        <div
-          style={{ width: "100%", height: "100%" }}
-          className="bg-white rounded-lg shadow-md p-4 w-48"
-        >
-          <div className="mb-2">
-            <img
-              src={Details?.idimage}
-              alt="ID Image"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-            />
-          </div>
-          <h2 className="text-lg font-semibold mb-2">ID NUMBER</h2>
-          <p className="text-gray-600 text-sm">{Details?.idnumber}</p>
-        </div>
+
+        {Details?   <div
+           style={{ width: "100%", height: "100%" }}
+           className="bg-white rounded-lg shadow-md p-4 w-48"
+         >
+           <div className="mb-2">
+             <img
+               src={Details?.idimage}
+               alt="ID Image"
+               style={{
+                 width: "100%",
+                 height: "100%",
+                 objectFit: "cover",
+               }}
+             />
+           </div>
+           <h2 className="text-lg font-semibold mb-2">ID NUMBER</h2>
+           <p className="text-gray-600 text-sm">{Details?.idnumber}</p>
+         </div>:<p style={{color:'red',margin:'1cm'}}>Enter you details for admin verification by click add</p>
+        
+        }
+       
       </div>
     </div>
   </div>
-  <div style={{ width: "100%" }} className="col-span-12 sm:col-span-4 flex flex-col">
-    <div style={{ width: "100%" }} className="rounded-lg border border-gray-400 bg-gray-200 p-0 flex-grow mx-auto text-center overflow-auto">
-      {review.map((item) => (
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden mx-auto text-center mb-4">
-          <div className="flex items-center p-2 mx-auto text-center">
-            <div>
-              <p className="font-semibold text-gray-800">{item?.guestname}</p>
-              <p className="text-sm text-gray-600">{item?.rating}</p>
-              <Rating rating={item?.rating} />
-            </div>
-          </div>
-          <div className="p-4">
-            <p className="text-gray-800">{item?.review}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
+  {rating!=null&&(
+     <div style={{ width: "100%" }} className="col-span-12 sm:col-span-4 flex flex-col">
+     <div style={{ width: "100%" }} className="rounded-lg border border-gray-400 bg-gray-200 p-0 flex-grow mx-auto text-center overflow-auto">
+       {review.map((item) => (
+         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden mx-auto text-center mb-4">
+           <div className="flex items-center p-2 mx-auto text-center">
+             <div>
+               <p className="font-semibold text-gray-800">{item?.guestname}</p>
+               <p className="text-sm text-gray-600">{item?.rating}</p>
+               <Rating rating={item?.rating} />
+             </div>
+           </div>
+           <div className="p-4">
+             <p className="text-gray-800">{item?.review}</p>
+           </div>
+         </div>
+       ))}
+     </div>
+   </div>
+  )}
+ 
 </div>
 
-    <Guidefooter/>
     </div>
   );
 }

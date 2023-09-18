@@ -14,7 +14,7 @@ export default function Resetpass() {
     
     try {
      dispatch(showloading())
-      const response=await axios.post('https://globalone.shop/api/guide/resetotp',values)
+      const response=await axios.post('http://localhost:5000/api/guide/resetotp',values)
       
       if(response.data.success){
         dispatch(hideloading())

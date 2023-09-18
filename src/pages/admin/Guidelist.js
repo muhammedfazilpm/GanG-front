@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { hideloading, showloading } from "../../redux/alertSlice";
 import Adminfooter from "./Adminfooter";
+import Swal from 'sweetalert2'
 
 export default function Guidelist() {
   const dispatch=useDispatch()
@@ -15,20 +16,34 @@ export default function Guidelist() {
   const guide = useContext(GuideContext);
   const guides = guide.guide;
   const blockUser = async (id) => {
-    try {
-      dispatch(showloading())
-      const response = await axios.post("https://globalone.shop/api/admin/blockUser", { id });
-   dispatch(hideloading())
-      if (response.data.success) {
-        toast.success(response.data.message);
-        window.location.reload();
-      } else {
-        toast.error(response.data.message);
+    const result = await Swal.fire({
+      title: 'Block Confirmation',
+      text: 'Are you sure you want to Blcok this guide?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Block',
+      cancelButtonText: 'Cancel',
+    });
+    if(result.isConfirmed){
+      try {
+        dispatch(showloading())
+        const response = await axios.post("http://localhost:5000/api/admin/blockUser", { id });
+     dispatch(hideloading())
+        if (response.data.success) {
+          toast.success(response.data.message);
+          window.location.reload();
+        } else {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        dispatch(hideloading())
+        toast.error("server problem wait");
       }
-    } catch (error) {
-      dispatch(hideloading())
-      toast.error("server problem wait");
+
     }
+    
   };
 
   return (

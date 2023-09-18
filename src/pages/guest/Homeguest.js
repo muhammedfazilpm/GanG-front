@@ -17,7 +17,7 @@ export default function Homeguest() {
     try {
    dispatch(showloading())
       const response = await axios.post(
-        "https://globalone.shop/api/guest/getUser",
+        "http://localhost:5000/api/guest/getUser",
         {},
         {
           headers: {
@@ -37,7 +37,6 @@ export default function Homeguest() {
     getData();
   }, []);
   useEffect(()=>{
-console.log(banner)
   },[banner])
 
   return (

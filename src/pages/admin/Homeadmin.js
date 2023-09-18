@@ -22,7 +22,7 @@ export default function Homeadmin() {
       dispatch(showloading())
       console.log("before request")
       const response = await axios.post(
-        "https://globalone.shop/api/admin/getAdmin",
+        "http://localhost:5000/api/admin/getAdmin",
         {},
         {
           headers: {

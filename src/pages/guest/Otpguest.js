@@ -9,7 +9,7 @@ export default function Otpguest() {
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
-      const response = await axios.post("https://globalone.shop/api/guest/otp", values);
+      const response = await axios.post("http://localhost:5000/api/guest/otp", values);
 
       if (response.data.success) {
         toast.success(response.data.message);
@@ -30,7 +30,7 @@ export default function Otpguest() {
       <h3>ENTER YOUR OTP HERE</h3>
 
       <div className="resetcards">
-        <div className="resetform">
+        <div style={{display:"flex",justifyContent:"center"}} className="resetform">
           <Form layout="vertical" onFinish={onFinish}>
             <p>Enter your email otp here</p>
             <Form.Item rules={otpRule} name="otp">

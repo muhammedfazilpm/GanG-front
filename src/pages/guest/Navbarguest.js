@@ -7,34 +7,69 @@ const Navbarguest = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
   const handlelogout = () => {
     localStorage.removeItem("guesttoken");
     window.location.href = "/guest/login";
   };
+  
+
   return (
     <nav style={{ background: "maroon" }} className="bg-blue-500 p-4">
       <div style={{ display: "flex" }}>
         <div style={{ width: "5%", height: "5%" }}>
           {" "}
-          <img src={gangLogo} />
+          <img src={gangLogo} alt="Gang Logo" />
         </div>
         <div style={{ width: "100%", textAlign: "center", color: "white" }}>
           <h2>GANG</h2>
           <h4>guest and guide</h4>
         </div>
       </div>
+   
       <div className="container mx-auto flex items-center justify-between">
         <div className="text-white font-bold text-xl"></div>
         <div className="hidden md:flex space-x-4">
-          <a href="/guest" className="text-white hover:text-gray-300">
+          <a
+            href="/guest"
+            className={`text-white hover:text-gray-300 ${
+              window.location.pathname === "/guest"
+                ? "highlight-link"
+                : ""
+            }`}
+          >
             Home
           </a>
-          <a href="/guest/book" className="text-white hover:text-gray-300">
+          <a
+            href="/guest/book"
+            className={`text-white hover:text-gray-300 ${
+              window.location.pathname === "/guest/book"
+                ? "highlight-link"
+                : ""
+            }`}
+          >
             Book
           </a>
-          <a href="/guest/orders" className="text-white hover:text-gray-300">
+          <a
+            href="/guest/orders"
+            className={`text-white hover:text-gray-300 ${
+              window.location.pathname === "/guest/orders"
+                ? "highlight-link"
+                : ""
+            }`}
+          >
             Orders
           </a>
+          {/* <a
+            href="/guest/chatlist"
+            className={`text-white hover:text-gray-300 ${
+              window.location.pathname === "/guest/chatlist"
+                ? "highlight-link"
+                : ""
+            }`}
+          >
+            Chatlists
+          </a> */}
           <a
             href="#"
             onClick={handlelogout}
@@ -66,28 +101,56 @@ const Navbarguest = () => {
         </div>
       </div>
       {isMenuOpen && (
-        <div style={{background:'maroon'}} className="md:hidden bg-blue-500">
-          <a href="/guest" className="block text-white p-2 hover:bg-blue-600">
+        <div style={{ background: "maroon" }} className="md:hidden bg-blue-500">
+          <a
+            href="/guest"
+            className={`block text-white p-4 hover:bg-blue-600 ${
+              window.location.pathname === "/guest"
+                ? "highlight-link"
+                : ""
+            }`}
+          >
             Home
           </a>
           <a
             href="/guest/book"
-            className="block text-white p-2 hover:bg-blue-600"
+            className={`block text-white p-4 hover:bg-blue-600 ${
+              window.location.pathname === "/guest/book"
+                ? "highlight-link"
+                : ""
+            }`}
           >
             Book
           </a>
-          <a href="/guest/orders" className="block text-white p-2 hover:bg-blue-600">
+          <a
+            href="/guest/orders"
+            className={`block text-white p-4 hover:bg-blue-600 ${
+              window.location.pathname === "/guest/orders"
+                ? "highlight-link"
+                : ""
+            }`}
+          >
             Orders
           </a>
           <a
             href="#"
             onClick={handlelogout}
-            className="block text-white p-2 hover:bg-blue-600"
+            className="block text-white p-4 hover:bg-blue-600"
           >
             Logout
           </a>
         </div>
       )}
+      <style>
+        {`
+          .highlight-link {
+            background-color: #3182ce;
+            color: #fff;
+            padding: 10px 20px; /* Increase padding as needed */
+            border-radius: 6px; /* Add rounded corners */
+          }
+        `}
+      </style>
     </nav>
   );
 };
