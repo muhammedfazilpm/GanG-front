@@ -67,6 +67,10 @@ export default function Chating() {
 
         
        }
+       else{
+        setName(response.data.name)
+
+       }
     } catch (error) {
       console.log(error)
       
