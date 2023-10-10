@@ -14,7 +14,7 @@ export default function Guestlist() {
       const getGuest=async()=>{
         try {
           dispatch(showloading())
-            const response= await axios.get('http://localhost:5000/api/admin/getGuest')
+            const response= await axios.get('https://globalone.shop/api/admin/getGuest')
            dispatch(hideloading())
             if(response.data.success){
                 
@@ -40,7 +40,7 @@ export default function Guestlist() {
           if(result.isConfirmed){
             try {
               dispatch(showloading())
-               const response=await axios.post('http://localhost:5000/api/admin/blockGuest',{id})
+               const response=await axios.post('https://globalone.shop/api/admin/blockGuest',{id})
               dispatch(hideloading())
                if(response.data.success){
                window.location.reload();

@@ -9,7 +9,7 @@ import axios from "axios";
 // import './guidechat.css'
 
 // import { guideRequest } from '../../axios'
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://globalone.shop");
 
 
 export default function Guidechat() {
@@ -44,7 +44,7 @@ export default function Guidechat() {
 
     }
    
-   const response= await axios.post('http://localhost:5000/api/guide/chathistory',{data})
+   const response= await axios.post('https://globalone.shop/api/guide/chathistory',{data})
    if (response.data.success) {
     const chat=response.data.chat
   for(let i=0;i<chat.length;i++){
@@ -95,7 +95,7 @@ useEffect(() => {
     <div className="flex-1 p-2 sm:p-6 justify-between flex flex-col ">
     {/* Chat Header */}
     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200 w-full">
-      <div className="relative flex items-center space-x-4 w-full">
+    <div className="relative flex items-center space-x-4 w-full">
       <div className="relative">
         <span className="absolute text-green-500 right-0 bottom-0">
           <svg width="20" height="20">
@@ -197,6 +197,8 @@ useEffect(() => {
       </div>
     </div>
   </div>
+  <br/>
+  <br/>
   
   </div>
   );

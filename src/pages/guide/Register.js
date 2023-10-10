@@ -15,7 +15,7 @@ export default function Register() {
   const onFinish= async(values)=>{
    try {
    dispatch(showloading())
-    const response=await axios.post("http://localhost:5000/api/guide/register",values)
+    const response=await axios.post("https://globalone.shop/api/guide/register",values)
     console.log(response)
     if(response.data.success){
       dispatch(hideloading())

@@ -21,7 +21,7 @@ export default function Ordersguest() {
   const getOrderdetals = async () => {
     dispatch(showloading())
     guestRequest({
-      url: "http://localhost:5000/api/guest/getOrders",
+      url: "https://globalone.shop/api/guest/getOrders",
       method: "post",
     })
       .then((response) => {

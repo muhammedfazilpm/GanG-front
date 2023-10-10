@@ -7,11 +7,12 @@ import { guestRequest } from "../../axios";
 import {formatDistanceToNow} from 'date-fns'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Footerguest from './Footerguest'
 
 // import './Chating.css'
 
 
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://globalone.shop");
 
 export default function Chating() {
   const Navigate=useNavigate()
@@ -47,7 +48,7 @@ export default function Chating() {
         id,
         userid
       }
-      const response=await axios.post('http://localhost:5000/api/guest/getchathistory',{data})
+      const response=await axios.post('https://globalone.shop/api/guest/getchathistory',{data})
       if (response.data.success) {
         const chat=response.data.chat
       for(let i=0;i<chat.length;i++){
@@ -103,8 +104,10 @@ useEffect(() => {
   }, [userid, id]);
   
   return (
-    <div>
+    <div className="h-screen">
       <Navbarguest/>
+      
+      <div className="flex-1 p-2 sm:p-6 justify-between flex flex-col ">
     {/* Chat Header */}
     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200 w-full">
       <div className="relative flex items-center space-x-4 w-full">
@@ -138,7 +141,7 @@ useEffect(() => {
         </div>
         <div className="flex flex-col  leading-tight">
           <div className="text-2xl mt-1 flex items-center">
-            {/* Display partner's name */}
+          
           </div>
           {/* Display partner's job title */}
         </div>
@@ -146,8 +149,8 @@ useEffect(() => {
     </div>
   
     {/* Chat Messages */}
-    <div className="flex-grow w-full  overflow-y-auto ">
-  <div id="messages" className="flex flex-col w-full p-3 scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch border rounded-lg min-h-screen">
+    <div className="flex-grow w-full overflow-y-auto h-screen ">
+    <div id="messages" className="flex flex-col w-full space-y-4 p-3 scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
     {messagelist.map((items) => {
       if (items.message) {
         const timeAgo = formatDistanceToNow(new Date(items?.time), {
@@ -155,7 +158,7 @@ useEffect(() => {
         });
         return (
           <div className="chat-message w-full flex justify-start mb-4" key={items.id}>
-            <div className="flex flex-col w-full space-y-2 text-xs max-w-md mx-2 items-start">
+          <div className="flex flex-col w-full space-y-2 text-xs max-w-md mx-2 items-start">
               <div className="w-full">
                 <span className="px-4 py-2 rounded-lg inline-block rounded-tl-none bg-gray-300 text-gray-600">
                   {items.message}
@@ -189,7 +192,7 @@ useEffect(() => {
 
   
     {/* Message Input */}
-    <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+    <div className="border-t-2 w-full border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
       <div className="relative flex">
         <span className="absolute inset-y-0 flex items-center"></span>
         <input
@@ -220,6 +223,9 @@ useEffect(() => {
         </div>
       </div>
     </div>
+    </div>
+   <br></br>
+   <br></br>
   </div>
 
   );

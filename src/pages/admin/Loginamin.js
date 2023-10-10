@@ -14,7 +14,7 @@ export default function Loginadmin() {
   const onFinish = async (values) => {
     try {
       dispatch(showloading());
-      const response = await axios.post("http://localhost:5000/api/admin/login", values);
+      const response = await axios.post("https://globalone.shop/api/admin/login", values);
       dispatch(hideloading());
 
       if (response.data.success) {

@@ -26,7 +26,7 @@ export default function Adddetails() {
     
     try {
       dispatch(showloading())
-       const response=await axios.post('http://localhost:5000/api/guide/getlocations')
+       const response=await axios.post('https://globalone.shop/api/guide/getlocations')
        dispatch(hideloading())
        setLocation(response.data.data)
        
@@ -55,7 +55,7 @@ console.log("location",location)
 
         
         
-        const response = await axios.post('http://localhost:5000/api/guide/addDetails', formData, {
+        const response = await axios.post('https://globalone.shop/api/guide/addDetails', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: "Bearer " + localStorage.getItem("token")  

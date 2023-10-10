@@ -14,7 +14,7 @@ export default function Orders() {
 const getOrders=async()=>{
     try {
         dispatch(showloading())
-        const response=await axios.get('http://localhost:5000/api/admin/getOrders')
+        const response=await axios.get('https://globalone.shop/api/admin/getOrders')
         dispatch(hideloading())
         if(response.data.success){
                setOrder(response.data.data)

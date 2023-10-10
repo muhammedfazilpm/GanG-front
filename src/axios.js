@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const guide = axios.create({ baseURL: "http://localhost:5000" });
+const guide = axios.create({ baseURL: "https://globalone.shop" });
 export const guideRequest = ({ ...options }) => {
   guide.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
     "token"
@@ -16,7 +16,7 @@ export const guideRequest = ({ ...options }) => {
 };
 
 
-const guest=axios.create({baseURL: "http://localhost:5000"})
+const guest=axios.create({baseURL: "https://globalone.shop"})
 export const guestRequest=({ ...options })  =>{
     guest.defaults.headers.common.Authorization=`Bearer ${localStorage.getItem("guesttoken")}`;
     const onSuccess=(response)=>response

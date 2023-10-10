@@ -37,7 +37,7 @@ export default function Editprofile() {
     setInputValue3(e.target.value)
   }
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const  file = e.target.files[0];
 
     if (file) {
       setSelectedImage(file);
@@ -55,7 +55,7 @@ export default function Editprofile() {
       formData.append("phone", inputValue2);
       formData.append("amount", inputValue3);
       formData.append("image", selectedImage);
-      const response = await axios.post("http://localhost:5000/api/guide/editprofile", formData, {
+      const response = await axios.post("https://globalone.shop/api/guide/editprofile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + localStorage.getItem("token"),

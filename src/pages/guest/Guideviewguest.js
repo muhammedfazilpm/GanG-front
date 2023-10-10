@@ -24,7 +24,7 @@ export default function Guideviewguest() {
   const getReview=async()=>{
     try {
       dispatch(showloading())
- const response=await axios.post('http://localhost:5000/api/guest/getReview',{id})
+ const response=await axios.post('https://globalone.shop/api/guest/getReview',{id})
  if(response.data.success){
   dispatch(hideloading())
   setReview(response.data.data)

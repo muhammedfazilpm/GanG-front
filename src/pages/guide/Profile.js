@@ -18,7 +18,7 @@ export default function Profile() {
     try {
       dispatch(showloading())
       const response = await axios.post(
-        "http://localhost:5000/api/guide/getProfile",
+        "https://globalone.shop/api/guide/getProfile",
         {},
         {
           headers: {

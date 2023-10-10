@@ -26,7 +26,7 @@ setReview(e.target.value)
         e.preventDefault()
        try {
         dispatch(showloading())
-        const response=await axios.post("http://localhost:5000/api/guest/submitReview",{rating,review,data})
+        const response=await axios.post("https://globalone.shop/api/guest/submitReview",{rating,review,data})
         dispatch(hideloading())
        if(response.data.success){
         toast.success(response.data.message)
